@@ -31,8 +31,10 @@ const props = defineProps<{ transaction: Transaction }>()
     <th class="c-transaction-row__party" scope="row">
       <span class="c-transaction-row__party-layout">
         <AppAvatar :name="props.transaction.name" />
-        <span class="c-transaction-row__name">{{ props.transaction.name }}</span>
-        <span class="c-transaction-row__secondary">{{ props.transaction.category }}</span>
+        <span class="c-transaction-row__party-text">
+          <span class="c-transaction-row__name">{{ props.transaction.name }}</span>
+          <span class="c-transaction-row__secondary">{{ props.transaction.category }}</span>
+        </span>
       </span>
     </th>
 
@@ -65,12 +67,19 @@ const props = defineProps<{ transaction: Transaction }>()
 
 .c-transaction-row__party-layout {
   display: flex;
-  flex-wrap: wrap;
-
-  // Column gap separates avatar from name; the row gap only applies once the
-  // secondary line wraps, and wants to be much tighter than the column gap.
-  gap: var(--space-1) var(--space-4);
+  gap: var(--space-4);
   align-items: center;
+}
+
+// Name and secondary line form their own column beside the avatar. Letting all
+// three share one wrapping flex row dropped a long name underneath the avatar.
+// min-width: 0 lets that column shrink below its content width so a very long
+// name truncates instead of pushing the amount out of the row.
+.c-transaction-row__party-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
 }
 
 .c-transaction-row__name {
@@ -82,7 +91,6 @@ const props = defineProps<{ transaction: Transaction }>()
 // with display:none so it never reaches assistive technology twice.
 .c-transaction-row__secondary {
   display: block;
-  margin-block-start: var(--space-1);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-regular);
   color: var(--color-text-muted);
@@ -90,12 +98,6 @@ const props = defineProps<{ transaction: Transaction }>()
   @include mx.from('md') {
     display: none;
   }
-}
-
-.c-transaction-row__party-layout .c-transaction-row__secondary {
-  flex-basis: 100%;
-  margin-block-start: 0;
-  margin-inline-start: calc(2.5rem + var(--space-4));
 }
 
 .c-transaction-row__category,
@@ -112,5 +114,9 @@ const props = defineProps<{ transaction: Transaction }>()
 .c-transaction-row__amount {
   text-align: end;
   white-space: nowrap;
+}
+
+.c-transaction-row__amount .c-transaction-row__secondary {
+  margin-block-start: var(--space-1);
 }
 </style>

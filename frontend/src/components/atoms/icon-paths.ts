@@ -20,6 +20,7 @@ export const ICON_PATHS = {
   trash: 'M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6',
   close: 'M6 6l12 12M18 6 6 18',
   plus: 'M12 5v14M5 12h14',
+  check: 'm5 13 4 4L19 7',
   warning: 'M12 4 2 20h20zM12 10v5M12 18h.01',
   jar: 'M8 3h8v3H8zM6 6h12l-1.2 13a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8zM9 13h6',
 } as const

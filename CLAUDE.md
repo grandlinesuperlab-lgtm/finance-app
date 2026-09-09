@@ -26,6 +26,11 @@ npm run format       # prettier
 - Code, comments, commit messages and identifiers are **English**. UI copy is **German**.
 - Conventional Commits (`feat:`, `fix:`, `refactor:`, `style:`, `docs:`, `chore:`).
   One logical change per commit.
+- Branches: `main` holds what is presentable at any moment — never commit to it
+  directly. `develop` is the working branch. Larger pieces of work get a
+  `feature/<short-name>` branch off `develop` and are merged back when green.
+  `develop` reaches `main` through a pull request, so the history on `main`
+  reads as a series of finished steps.
 - `npm run check` must pass before a commit. Never disable a lint rule to make
   something pass — fix the code, or raise the rule as a decision to be made.
 - Types describing data that crosses the API boundary live in `shared/types/`.

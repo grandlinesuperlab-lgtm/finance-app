@@ -82,12 +82,20 @@ export function formatOrdinalDay(day: number): string {
   return `${day}th`
 }
 
-/** Initials for the generated avatars: "Harvest Market" -> "HM". */
+/**
+ * Initials for the generated avatars: "Harvest Market" -> "HM".
+ *
+ * Only words that begin with a letter count, so "Rivet & Thread" gives "RT"
+ * rather than "R&". Falls back to the first character of the name when a
+ * counterparty has no letters at all.
+ */
 export function initialsFor(name: string): string {
-  return name
+  const initials = name
     .split(/\s+/)
-    .filter(Boolean)
+    .filter((word) => /^\p{L}/u.test(word))
     .slice(0, 2)
-    .map((word) => word[0]?.toUpperCase() ?? '')
+    .map((word) => word.slice(0, 1).toUpperCase())
     .join('')
+
+  return initials || name.trim().slice(0, 1).toUpperCase()
 }

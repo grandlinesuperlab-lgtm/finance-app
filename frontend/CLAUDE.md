@@ -20,6 +20,24 @@ decided by one mechanical rule, not by taste:
 Atoms and molecules are pure: props in, events out. If a component needs data
 it cannot receive as a prop, it is an organism.
 
+Each layer folder has a README stating its rule. `atoms/BaseButton.vue` is the
+reference implementation — new components follow its shape.
+
+## Semantic HTML
+
+This is enforced, not requested:
+
+- `local/div-budget` (a custom rule in `eslint-rules/`) caps `div` and `span`
+  at four per template. Over budget means an element with meaning was skipped —
+  `section`, `article`, `ul`, `dl`, `table`, `figure`. Raise the budget for a
+  file only with a reason, and never as a way around rethinking the markup.
+- `eslint-plugin-vuejs-accessibility` errors on click handlers without keyboard
+  equivalents, form controls without labels, images without `alt`, empty
+  headings, and invalid ARIA.
+- `vue/no-restricted-html-elements` blocks `b`, `i` and the obsolete elements.
+
+The full element-by-element guidance is in the `component-conventions` skill.
+
 ## Styling
 
 - Every component's styles live in its own `<style scoped lang="scss">`.

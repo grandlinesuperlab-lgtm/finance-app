@@ -58,7 +58,17 @@
       "deg",
       "px"
     ],
-    "no-descending-specificity": null
+    "no-descending-specificity": null,
+    "media-feature-name-disallowed-list": [
+      [
+        "max-width",
+        "max-height"
+      ],
+      {
+        "message": "This project is mobile-first: base styles are the small-screen case and larger screens are added with @include mx.from('md'|'lg'|\u2026). A max-width query inverts that and is not allowed."
+      }
+    ],
+    "scss/at-mixin-pattern": "^[a-z][a-z0-9-]*$"
   },
   "overrides": [
     {

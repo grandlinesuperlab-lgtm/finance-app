@@ -40,6 +40,11 @@ The full element-by-element guidance is in the `component-conventions` skill.
 
 ## Styling
 
+- **Mobile-first, enforced.** Base styles are the small-screen case. Larger
+  screens are added with `@include mx.from('sm'|'md'|'lg'|'xl')`, which only
+  ever emits `min-width`. `max-width` and `max-height` queries are a stylelint
+  error — they invert the cascade and make the small-screen case the exception
+  instead of the default.
 - Every component's styles live in its own `<style scoped lang="scss">`.
 - Block name = component file name in kebab-case, prefixed `c-`
   (`StatCard.vue` → `.c-stat-card`). This makes every block name unique by

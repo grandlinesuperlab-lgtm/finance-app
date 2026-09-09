@@ -21,13 +21,15 @@ const props = withDefaults(
     options: readonly string[]
     /** Hide the label visually below the given breakpoint's layout. */
     hideLabel?: boolean
+    error?: string
   }>(),
-  { hideLabel: false },
+  { hideLabel: false, error: undefined },
 )
 
 defineEmits<{ 'update:modelValue': [value: string] }>()
 
 const id = useId()
+const errorId = `${id}-error`
 </script>
 
 <template>
@@ -42,20 +44,30 @@ const id = useId()
       :id="id"
       class="c-app-select__control"
       :value="props.modelValue"
+      :aria-invalid="props.error ? true : undefined"
+      :aria-describedby="props.error ? errorId : undefined"
       @change="$emit('update:modelValue', ($event.target as HTMLSelectElement).value)"
     >
       <option v-for="option in props.options" :key="option" :value="option">
         {{ option }}
       </option>
     </select>
+    <span v-if="props.error" :id="errorId" class="c-app-select__error">{{ props.error }}</span>
   </p>
 </template>
 
 <style scoped lang="scss">
 .c-app-select {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--space-2);
   align-items: center;
+}
+
+.c-app-select__error {
+  flex-basis: 100%;
+  font-size: var(--font-size-xs);
+  color: var(--color-error);
 }
 
 .c-app-select__label {

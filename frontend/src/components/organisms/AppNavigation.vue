@@ -70,8 +70,8 @@ const { collapsed, toggle } = useSidebarCollapsed()
   z-index: var(--z-sticky);
   display: flex;
   padding-inline: var(--space-2);
-  color: var(--color-text-inverse);
-  background-color: var(--color-surface-inverse);
+  color: var(--color-nav-text);
+  background-color: var(--color-nav-surface);
   border-start-start-radius: var(--radius-lg);
   border-start-end-radius: var(--radius-lg);
 
@@ -93,6 +93,29 @@ const { collapsed, toggle } = useSidebarCollapsed()
 .c-app-navigation--collapsed {
   @include mx.from('lg') {
     width: var(--layout-sidebar-width-compact);
+  }
+}
+
+// Collapsed, the rail is only wide enough for the icon: the generous inline
+// padding of the expanded sidebar would push the icon straight out of it.
+.c-app-navigation--collapsed .c-app-navigation__list {
+  @include mx.from('lg') {
+    padding-inline-end: 0;
+  }
+}
+
+.c-app-navigation--collapsed .c-app-navigation__link,
+.c-app-navigation--collapsed .c-app-navigation__toggle {
+  @include mx.from('lg') {
+    gap: 0;
+    justify-content: center;
+    padding-inline: var(--space-4);
+  }
+}
+
+.c-app-navigation--collapsed .c-app-navigation__link[aria-current='page'] {
+  @include mx.from('lg') {
+    padding-inline-start: calc(var(--space-4) - 4px);
   }
 }
 
@@ -139,7 +162,7 @@ const { collapsed, toggle } = useSidebarCollapsed()
   padding-block: var(--space-2);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
-  color: var(--palette-grey-300);
+  color: var(--color-nav-text-muted);
   text-decoration: none;
   border-start-start-radius: var(--radius-sm);
   border-start-end-radius: var(--radius-sm);
@@ -147,7 +170,7 @@ const { collapsed, toggle } = useSidebarCollapsed()
   @include mx.focus-ring(-2px);
 
   &:hover {
-    color: var(--palette-white);
+    color: var(--color-nav-text);
   }
 
   // The router marks the active route with aria-current, so the styling hangs
@@ -175,19 +198,21 @@ const { collapsed, toggle } = useSidebarCollapsed()
   }
 }
 
+// The label is hidden visually, never with `display: none` — an icon-only
+// link with no accessible name is unusable with a screen reader, and that is
+// exactly what the narrowest layout and the collapsed rail would produce.
 .c-app-navigation__label {
-  @include mx.truncate;
-
-  display: none;
+  @include mx.visually-hidden;
 
   @include mx.from('sm') {
-    display: block;
+    @include mx.visually-shown;
+    @include mx.truncate;
   }
 }
 
 .c-app-navigation--collapsed .c-app-navigation__label {
   @include mx.from('lg') {
-    display: none;
+    @include mx.visually-hidden;
   }
 }
 
@@ -203,14 +228,14 @@ const { collapsed, toggle } = useSidebarCollapsed()
     margin-block-start: auto;
     font-size: var(--font-size-md);
     font-weight: var(--font-weight-bold);
-    color: var(--palette-grey-300);
+    color: var(--color-nav-text-muted);
     background: none;
     border: 0;
 
     @include mx.focus-ring(-2px);
 
     &:hover {
-      color: var(--palette-white);
+      color: var(--color-nav-text);
     }
   }
 }

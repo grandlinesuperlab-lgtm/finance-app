@@ -70,6 +70,13 @@
   --color-error: var(--theme-red);
   --color-focus-ring: var(--theme-green);
 
+  // The navigation is a permanently dark surface in both themes, so it gets
+  // its own tokens. Using the inverse ones would work in light mode and then
+  // invert in dark mode into dark text on a dark rail.
+  --color-nav-surface: var(--palette-grey-900);
+  --color-nav-text: var(--palette-white);
+  --color-nav-text-muted: var(--palette-grey-300);
+
   // --- Shape and depth ------------------------------------------------------
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
@@ -120,6 +127,9 @@
   --color-amount-negative: var(--palette-grey-100);
   --color-error: #e2695a;
   --color-focus-ring: #4aa39e;
+
+  // Lifted slightly off the page so the rail still reads as its own surface.
+  --color-nav-surface: #26252b;
 
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 40%);
   --shadow-md: 0 4px 24px rgb(0 0 0 / 45%);

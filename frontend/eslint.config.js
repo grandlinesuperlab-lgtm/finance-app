@@ -59,7 +59,11 @@ export default [
       'vuejs-accessibility/aria-props': 'error',
       'vuejs-accessibility/aria-role': 'error',
       'vuejs-accessibility/role-has-required-aria-props': 'error',
-      'vuejs-accessibility/no-redundant-roles': 'error',
+      // `role="list"` on a <ul> is redundant per the spec, but Safari drops
+      // list semantics as soon as `list-style: none` is applied, so VoiceOver
+      // stops announcing "list, 5 items". The role is the accepted workaround
+      // and is required by this project's conventions, so it is allowed here.
+      'vuejs-accessibility/no-redundant-roles': ['error', { ul: ['list'], ol: ['list'] }],
       'vuejs-accessibility/no-autofocus': 'error',
       'vuejs-accessibility/tabindex-no-positive': 'error',
       'vuejs-accessibility/mouse-events-have-key-events': 'error',

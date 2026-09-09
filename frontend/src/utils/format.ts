@@ -8,7 +8,12 @@
  */
 
 const LOCALE = 'en-US'
-const CURRENCY = 'USD'
+
+// The interface is English, so the number layout stays en-US — symbol first,
+// comma thousands: "€6,692.52". Switching to de-DE would also move the symbol
+// behind the amount and swap the separators, which reads oddly next to English
+// labels. Currency and number layout are two decisions, and only one changed.
+const CURRENCY = 'EUR'
 
 const currency = new Intl.NumberFormat(LOCALE, {
   style: 'currency',

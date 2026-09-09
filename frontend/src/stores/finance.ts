@@ -2,6 +2,9 @@ import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 
 import type { Budget, FinanceData, Pot, Transaction } from '@shared/types/finance'
+import { deposit, releasePot, withdraw, type Booking } from '@/domain/pots'
+import type { BudgetInput } from '@/domain/budgets'
+import type { PotInput } from '@/domain/pots'
 import { localFinanceRepository, type FinanceRepository } from '@/services/finance'
 import { summariseBudgets } from '@/domain/budgets'
 import { deriveRecurringBills, summariseBills } from '@/domain/bills'
@@ -71,6 +74,83 @@ export const useFinanceStore = defineStore('finance', () => {
     status.value = 'ready'
   }
 
+  // --- Writes: budgets -------------------------------------------------------
+
+  function addBudget(input: BudgetInput): void {
+    if (!data.value) return
+    data.value.budgets.push({ id: crypto.randomUUID(), ...input })
+    void persist()
+  }
+
+  function updateBudget(id: string, input: BudgetInput): void {
+    const budget = data.value?.budgets.find((entry) => entry.id === id)
+    if (!budget) return
+    Object.assign(budget, input)
+    void persist()
+  }
+
+  function removeBudget(id: string): void {
+    if (!data.value) return
+    data.value.budgets = data.value.budgets.filter((budget) => budget.id !== id)
+    void persist()
+  }
+
+  // --- Writes: pots ----------------------------------------------------------
+
+  function addPot(input: PotInput): void {
+    if (!data.value) return
+    data.value.pots.push({ id: crypto.randomUUID(), total: 0, ...input })
+    void persist()
+  }
+
+  function updatePot(id: string, input: PotInput): void {
+    const pot = data.value?.pots.find((entry) => entry.id === id)
+    if (!pot) return
+    Object.assign(pot, input)
+    void persist()
+  }
+
+  /**
+   * Removing a pot returns everything saved in it to the balance. Money does
+   * not vanish because its container was deleted.
+   */
+  function removePot(id: string): void {
+    if (!data.value) return
+    const pot = data.value.pots.find((entry) => entry.id === id)
+    if (!pot) return
+
+    data.value.balance = releasePot(data.value.balance, pot)
+    data.value.pots = data.value.pots.filter((entry) => entry.id !== id)
+    void persist()
+  }
+
+  /**
+   * Both money movements go through one path, because both change the balance
+   * and the pot together. The booking either applies in full or not at all;
+   * the caller gets the reason back and shows it on the field.
+   */
+  function moveMoney(id: string, amount: number, direction: 'in' | 'out'): Booking {
+    if (!data.value) return { ok: false, error: 'Your data is still loading.' }
+
+    const pot = data.value.pots.find((entry) => entry.id === id)
+    if (!pot) return { ok: false, error: 'That pot no longer exists.' }
+
+    const booking =
+      direction === 'in'
+        ? deposit(data.value.balance, pot, amount)
+        : withdraw(data.value.balance, pot, amount)
+
+    if (!booking.ok) return booking
+
+    data.value.balance = booking.balance
+    Object.assign(pot, booking.pot)
+    void persist()
+    return booking
+  }
+
+  const depositToPot = (id: string, amount: number) => moveMoney(id, amount, 'in')
+  const withdrawFromPot = (id: string, amount: number) => moveMoney(id, amount, 'out')
+
   /** For tests and for a future backend implementation. */
   function useRepository(next: FinanceRepository): void {
     repository = next
@@ -96,6 +176,14 @@ export const useFinanceStore = defineStore('finance', () => {
     load,
     persist,
     resetToSeed,
+    addBudget,
+    updateBudget,
+    removeBudget,
+    addPot,
+    updatePot,
+    removePot,
+    depositToPot,
+    withdrawFromPot,
     useRepository,
   }
 })

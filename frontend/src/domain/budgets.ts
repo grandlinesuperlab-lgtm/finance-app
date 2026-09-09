@@ -1,4 +1,5 @@
-import type { Budget, Category, Transaction } from '@shared/types/finance'
+import type { Budget, Category, Theme, Transaction } from '@shared/types/finance'
+import type { FieldErrors } from './pots'
 
 /**
  * Budget arithmetic. Pure functions, no Vue.
@@ -108,4 +109,40 @@ export function totalsFor(summaries: BudgetSummary[]): BudgetTotals {
     }),
     { spent: 0, limit: 0 },
   )
+}
+
+export interface BudgetInput {
+  category: Category
+  maximum: number
+  theme: Theme
+}
+
+/**
+ * A category can carry only one budget, and a colour only one budget — two
+ * budgets sharing either would make the donut and its legend ambiguous.
+ *
+ * `existingId` is the budget being edited, so it never clashes with itself.
+ */
+export function validateBudget(
+  input: BudgetInput,
+  existing: Budget[],
+  existingId?: string,
+): FieldErrors<BudgetInput> {
+  const errors: FieldErrors<BudgetInput> = {}
+  const others = existing.filter((budget) => budget.id !== existingId)
+
+  if (!input.category) errors.category = 'Choose a category.'
+  else if (others.some((budget) => budget.category === input.category)) {
+    errors.category = 'That category already has a budget.'
+  }
+
+  if (!Number.isFinite(input.maximum) || input.maximum <= 0) {
+    errors.maximum = 'Set a maximum greater than zero.'
+  }
+
+  if (others.some((budget) => budget.theme === input.theme)) {
+    errors.theme = 'That colour is already used by another budget.'
+  }
+
+  return errors
 }

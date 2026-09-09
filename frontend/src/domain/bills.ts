@@ -103,3 +103,48 @@ export function summariseBills(bills: RecurringBill[]): BillTotals {
     dueSoon: total('due-soon'),
   }
 }
+
+export const BILL_SORT_OPTIONS = [
+  'Latest',
+  'Oldest',
+  'A to Z',
+  'Z to A',
+  'Highest',
+  'Lowest',
+] as const
+
+export type BillSortOption = (typeof BILL_SORT_OPTIONS)[number]
+
+/**
+ * Search and sort for the recurring bills page — the mirror image of
+ * queryTransactions, minus pagination: one bill per vendor is a short list.
+ *
+ * "Latest" and "Oldest" order by the day of the month a bill falls due, which
+ * is the only date a derived bill has.
+ */
+export function queryBills(
+  bills: RecurringBill[],
+  options: { search: string; sort: BillSortOption },
+): RecurringBill[] {
+  const needle = options.search.trim().toLowerCase()
+  const matched = needle
+    ? bills.filter((bill) => bill.name.toLowerCase().includes(needle))
+    : bills
+
+  const sorted = [...matched]
+
+  switch (options.sort) {
+    case 'Latest':
+      return sorted.sort((a, b) => b.dueDay - a.dueDay)
+    case 'Oldest':
+      return sorted.sort((a, b) => a.dueDay - b.dueDay)
+    case 'A to Z':
+      return sorted.sort((a, b) => a.name.localeCompare(b.name))
+    case 'Z to A':
+      return sorted.sort((a, b) => b.name.localeCompare(a.name))
+    case 'Highest':
+      return sorted.sort((a, b) => b.amount - a.amount)
+    case 'Lowest':
+      return sorted.sort((a, b) => a.amount - b.amount)
+  }
+}

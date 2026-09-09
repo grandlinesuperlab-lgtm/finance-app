@@ -1,0 +1,337 @@
+{
+  "balance": {
+    "current": 6692.52,
+    "income": 2620.0,
+    "expenses": 855.85
+  },
+  "transactions": [
+    {
+      "id": "504b642e7276",
+      "name": "Harvest Market",
+      "category": "Groceries",
+      "date": "2024-08-19T18:13:00Z",
+      "amount": -46.9,
+      "recurring": false
+    },
+    {
+      "id": "d00d97deaafc",
+      "name": "Daniel Okonkwo",
+      "category": "General",
+      "date": "2024-08-18T17:06:00Z",
+      "amount": -75.5,
+      "recurring": false
+    },
+    {
+      "id": "29ca2f06c021",
+      "name": "The Copper Kettle",
+      "category": "Dining Out",
+      "date": "2024-08-17T16:59:00Z",
+      "amount": -31.6,
+      "recurring": false
+    },
+    {
+      "id": "8f89c1c142e9",
+      "name": "Lumen Bookshop",
+      "category": "Lifestyle",
+      "date": "2024-08-16T15:52:00Z",
+      "amount": -22.4,
+      "recurring": false
+    },
+    {
+      "id": "c38674cb3b08",
+      "name": "Cinema Verite",
+      "category": "Entertainment",
+      "date": "2024-08-15T14:45:00Z",
+      "amount": -24.0,
+      "recurring": false
+    },
+    {
+      "id": "ca4a5b2156e1",
+      "name": "Harvest Market",
+      "category": "Groceries",
+      "date": "2024-08-14T13:38:00Z",
+      "amount": -52.8,
+      "recurring": false
+    },
+    {
+      "id": "c11931bb4913",
+      "name": "Rivet & Thread",
+      "category": "Shopping",
+      "date": "2024-08-13T12:31:00Z",
+      "amount": -145.0,
+      "recurring": false
+    },
+    {
+      "id": "5732a3dbec81",
+      "name": "Pixel Playground",
+      "category": "Entertainment",
+      "date": "2024-08-11T10:17:00Z",
+      "amount": -10.0,
+      "recurring": true
+    },
+    {
+      "id": "65bc1d07a0cc",
+      "name": "The Copper Kettle",
+      "category": "Dining Out",
+      "date": "2024-08-10T09:10:00Z",
+      "amount": -38.5,
+      "recurring": false
+    },
+    {
+      "id": "8f9ef280a65d",
+      "name": "EcoFuel Energy",
+      "category": "Bills",
+      "date": "2024-08-09T18:03:00Z",
+      "amount": -35.0,
+      "recurring": true
+    },
+    {
+      "id": "a72b55b8d701",
+      "name": "Mara Ellison",
+      "category": "General",
+      "date": "2024-08-08T17:56:00Z",
+      "amount": 120.0,
+      "recurring": false
+    },
+    {
+      "id": "700cf3327948",
+      "name": "Aqua Flow Utilities",
+      "category": "Bills",
+      "date": "2024-08-07T16:49:00Z",
+      "amount": -100.0,
+      "recurring": true
+    },
+    {
+      "id": "62a486fa2c2a",
+      "name": "Swift Ride Share",
+      "category": "Transportation",
+      "date": "2024-08-06T15:42:00Z",
+      "amount": -20.0,
+      "recurring": true
+    },
+    {
+      "id": "8433e33b4b39",
+      "name": "Harvest Market",
+      "category": "Groceries",
+      "date": "2024-08-05T14:35:00Z",
+      "amount": -74.15,
+      "recurring": false
+    },
+    {
+      "id": "21b81a05a765",
+      "name": "Elevate Education",
+      "category": "Education",
+      "date": "2024-08-04T13:28:00Z",
+      "amount": -50.0,
+      "recurring": true
+    },
+    {
+      "id": "dd64c02fd625",
+      "name": "Serenity Spa & Wellness",
+      "category": "Personal Care",
+      "date": "2024-08-03T12:21:00Z",
+      "amount": -30.0,
+      "recurring": true
+    },
+    {
+      "id": "55f3caeb0f74",
+      "name": "Spark Electric Solutions",
+      "category": "Bills",
+      "date": "2024-08-02T11:14:00Z",
+      "amount": -100.0,
+      "recurring": true
+    },
+    {
+      "id": "52de6ec5ec36",
+      "name": "Gravity Systems",
+      "category": "General",
+      "date": "2024-08-01T10:07:00Z",
+      "amount": 2500.0,
+      "recurring": false
+    },
+    {
+      "id": "b779d328c9d4",
+      "name": "Cloudline Insurance",
+      "category": "Bills",
+      "date": "2024-07-28T17:16:00Z",
+      "amount": -62.0,
+      "recurring": true
+    },
+    {
+      "id": "432c546da078",
+      "name": "Lumen Bookshop",
+      "category": "Lifestyle",
+      "date": "2024-07-24T13:48:00Z",
+      "amount": -18.75,
+      "recurring": false
+    },
+    {
+      "id": "048f88749c3b",
+      "name": "ByteWise",
+      "category": "Bills",
+      "date": "2024-07-22T11:34:00Z",
+      "amount": -49.99,
+      "recurring": true
+    },
+    {
+      "id": "cbcad7e3e1f5",
+      "name": "Nimbus Data Storage",
+      "category": "Bills",
+      "date": "2024-07-21T10:27:00Z",
+      "amount": -9.99,
+      "recurring": true
+    },
+    {
+      "id": "520bba275a23",
+      "name": "Harvest Market",
+      "category": "Groceries",
+      "date": "2024-07-19T18:13:00Z",
+      "amount": -55.2,
+      "recurring": false
+    },
+    {
+      "id": "bdc5cb487498",
+      "name": "Northside Outfitters",
+      "category": "Shopping",
+      "date": "2024-07-16T15:52:00Z",
+      "amount": -120.0,
+      "recurring": false
+    },
+    {
+      "id": "fb734c0a8540",
+      "name": "The Copper Kettle",
+      "category": "Dining Out",
+      "date": "2024-07-12T11:24:00Z",
+      "amount": -42.3,
+      "recurring": false
+    },
+    {
+      "id": "5b00018d68cd",
+      "name": "Pixel Playground",
+      "category": "Entertainment",
+      "date": "2024-07-11T10:17:00Z",
+      "amount": -10.0,
+      "recurring": true
+    },
+    {
+      "id": "2b95e9ff047d",
+      "name": "EcoFuel Energy",
+      "category": "Bills",
+      "date": "2024-07-09T18:03:00Z",
+      "amount": -35.0,
+      "recurring": true
+    },
+    {
+      "id": "427ecc04c4c9",
+      "name": "Aqua Flow Utilities",
+      "category": "Bills",
+      "date": "2024-07-07T16:49:00Z",
+      "amount": -100.0,
+      "recurring": true
+    },
+    {
+      "id": "a945f367696d",
+      "name": "Swift Ride Share",
+      "category": "Transportation",
+      "date": "2024-07-06T15:42:00Z",
+      "amount": -20.0,
+      "recurring": true
+    },
+    {
+      "id": "ddb33a9f8dba",
+      "name": "Harvest Market",
+      "category": "Groceries",
+      "date": "2024-07-05T14:35:00Z",
+      "amount": -68.4,
+      "recurring": false
+    },
+    {
+      "id": "45888e3679e7",
+      "name": "Elevate Education",
+      "category": "Education",
+      "date": "2024-07-04T13:28:00Z",
+      "amount": -50.0,
+      "recurring": true
+    },
+    {
+      "id": "f4c5d358d1e6",
+      "name": "Serenity Spa & Wellness",
+      "category": "Personal Care",
+      "date": "2024-07-03T12:21:00Z",
+      "amount": -30.0,
+      "recurring": true
+    },
+    {
+      "id": "aa6261dcb10e",
+      "name": "Spark Electric Solutions",
+      "category": "Bills",
+      "date": "2024-07-02T11:14:00Z",
+      "amount": -100.0,
+      "recurring": true
+    },
+    {
+      "id": "b418949b4f95",
+      "name": "Gravity Systems",
+      "category": "General",
+      "date": "2024-07-01T10:07:00Z",
+      "amount": 2500.0,
+      "recurring": false
+    }
+  ],
+  "budgets": [
+    {
+      "id": "bdg-entertainment",
+      "category": "Entertainment",
+      "maximum": 50.0,
+      "theme": "green"
+    },
+    {
+      "id": "bdg-bills",
+      "category": "Bills",
+      "maximum": 750.0,
+      "theme": "cyan"
+    },
+    {
+      "id": "bdg-dining-out",
+      "category": "Dining Out",
+      "maximum": 75.0,
+      "theme": "navy"
+    },
+    {
+      "id": "bdg-personal-care",
+      "category": "Personal Care",
+      "maximum": 100.0,
+      "theme": "yellow"
+    }
+  ],
+  "pots": [
+    {
+      "id": "pot-savings",
+      "name": "Savings",
+      "target": 2000.0,
+      "total": 159.0,
+      "theme": "green"
+    },
+    {
+      "id": "pot-concert-ticket",
+      "name": "Concert Ticket",
+      "target": 150.0,
+      "total": 110.0,
+      "theme": "navy"
+    },
+    {
+      "id": "pot-gift",
+      "name": "Gift",
+      "target": 60.0,
+      "total": 40.0,
+      "theme": "cyan"
+    },
+    {
+      "id": "pot-new-laptop",
+      "name": "New Laptop",
+      "target": 1000.0,
+      "total": 10.0,
+      "theme": "yellow"
+    }
+  ]
+}

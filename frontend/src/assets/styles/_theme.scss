@@ -77,6 +77,12 @@
   --color-nav-text: var(--palette-white);
   --color-nav-text-muted: var(--palette-grey-300);
 
+  // Same story for the inverted balance card: it is dark in both themes, so it
+  // must not borrow tokens that swap meaning when the theme does.
+  --color-inverted-surface: var(--palette-grey-900);
+  --color-inverted-text: var(--palette-white);
+  --color-inverted-text-muted: var(--palette-grey-300);
+
   // --- Shape and depth ------------------------------------------------------
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
@@ -130,6 +136,7 @@
 
   // Lifted slightly off the page so the rail still reads as its own surface.
   --color-nav-surface: #26252b;
+  --color-inverted-surface: #26252b;
 
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 40%);
   --shadow-md: 0 4px 24px rgb(0 0 0 / 45%);

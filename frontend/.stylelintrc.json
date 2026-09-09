@@ -68,7 +68,18 @@
         "message": "This project is mobile-first: base styles are the small-screen case and larger screens are added with @include mx.from('md'|'lg'|\u2026). A max-width query inverts that and is not allowed."
       }
     ],
-    "scss/at-mixin-pattern": "^[a-z][a-z0-9-]*$"
+    "scss/at-mixin-pattern": "^[a-z][a-z0-9-]*$",
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": [
+          "deep",
+          "slotted",
+          "global"
+        ],
+        "message": "Unknown pseudo-class. Vue's :deep(), :slotted() and :global() are allowed inside scoped styles."
+      }
+    ]
   },
   "overrides": [
     {

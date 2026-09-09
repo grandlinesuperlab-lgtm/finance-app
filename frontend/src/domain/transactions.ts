@@ -108,3 +108,11 @@ export function queryTransactions(
   )
   return paginate(sortTransactions(matched, query.sort), query.page, query.perPage)
 }
+
+/** The newest transactions, for the overview's recent-activity list. */
+export function latestTransactions(
+  transactions: Transaction[],
+  limit: number,
+): Transaction[] {
+  return sortTransactions(transactions, 'Latest').slice(0, limit)
+}

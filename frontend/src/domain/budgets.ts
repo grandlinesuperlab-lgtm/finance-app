@@ -91,3 +91,21 @@ export function latestInCategory(
     .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, limit)
 }
+
+export interface BudgetTotals {
+  /** Everything spent against a budget this month. */
+  spent: number
+  /** The sum of every budget's cap. */
+  limit: number
+}
+
+/** The two figures in the middle of the donut. */
+export function totalsFor(summaries: BudgetSummary[]): BudgetTotals {
+  return summaries.reduce<BudgetTotals>(
+    (totals, summary) => ({
+      spent: totals.spent + summary.spent,
+      limit: totals.limit + summary.budget.maximum,
+    }),
+    { spent: 0, limit: 0 },
+  )
+}

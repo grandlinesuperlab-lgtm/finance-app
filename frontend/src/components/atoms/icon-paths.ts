@@ -16,6 +16,7 @@ export const ICON_PATHS = {
   chevronRight: 'm10 6 6 6-6 6',
   search: 'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zm5 12 4 4',
   caret: 'm6 9 6 6 6-6',
+  jar: 'M8 3h8v3H8zM6 6h12l-1.2 13a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8zM9 13h6',
 } as const
 
 export type IconName = keyof typeof ICON_PATHS

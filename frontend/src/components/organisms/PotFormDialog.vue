@@ -16,6 +16,7 @@ import AppTextField from '@/components/atoms/AppTextField.vue'
 import AppThemeSelect from '@/components/atoms/AppThemeSelect.vue'
 import BaseButton from '@/components/atoms/BaseButton.vue'
 import AppDialog from '@/components/molecules/AppDialog.vue'
+import { useInvalidFocus } from '@/composables/useInvalidFocus'
 import { isValid, validatePot, type FieldErrors, type PotInput } from '@/domain/pots'
 
 const props = defineProps<{
@@ -27,6 +28,8 @@ const props = defineProps<{
 
 const emit = defineEmits<{ submit: [input: PotInput]; close: [] }>()
 
+const { focusFirstInvalid } = useInvalidFocus('form')
+
 const NAME_LIMIT = 30
 
 const name = ref('')
@@ -37,7 +40,9 @@ const errors = ref<FieldErrors<PotInput>>({})
 const isEditing = computed(() => Boolean(props.pot))
 
 const takenThemes = computed(() =>
-  props.existing.filter((entry) => entry.id !== props.pot?.id).map((entry) => entry.theme),
+  props.existing
+    .filter((entry) => entry.id !== props.pot?.id)
+    .map((entry) => entry.theme),
 )
 
 function firstFreeTheme(): Theme {
@@ -66,7 +71,7 @@ function onSubmit() {
   }
 
   errors.value = validatePot(input, props.existing, props.pot?.id)
-  if (!isValid(errors.value)) return
+  if (!isValid(errors.value)) return focusFirstInvalid()
 
   emit('submit', input)
 }
@@ -83,7 +88,7 @@ function onSubmit() {
     "
     @close="emit('close')"
   >
-    <form class="c-pot-form" novalidate @submit.prevent="onSubmit">
+    <form ref="form" class="c-pot-form" novalidate @submit.prevent="onSubmit">
       <AppTextField
         v-model="name"
         label="Name"

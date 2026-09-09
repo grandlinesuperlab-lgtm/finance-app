@@ -121,7 +121,13 @@
 @mixin theme-dark {
   --color-surface: #26252b;
   --color-surface-sunken: #17161a;
-  --color-surface-inverse: #34333a;
+
+  // "Inverse" means the opposite of the page, so in dark mode this surface has
+  // to be light. It was dark here while --color-text-inverse had already
+  // flipped to near-black, which left every primary button and the current
+  // page in the pagination at a contrast of 1.31 — dark text on a dark fill.
+  // Found by axe in the dark theme, on all three breakpoints.
+  --color-surface-inverse: var(--palette-grey-100);
   --color-border: #3a3941;
 
   --color-text: var(--palette-grey-100);

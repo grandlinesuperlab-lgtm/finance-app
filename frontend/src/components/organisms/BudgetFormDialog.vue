@@ -20,6 +20,7 @@ import AppSelect from '@/components/atoms/AppSelect.vue'
 import AppThemeSelect from '@/components/atoms/AppThemeSelect.vue'
 import BaseButton from '@/components/atoms/BaseButton.vue'
 import AppDialog from '@/components/molecules/AppDialog.vue'
+import { useInvalidFocus } from '@/composables/useInvalidFocus'
 import { validateBudget, type BudgetInput } from '@/domain/budgets'
 import { isValid, type FieldErrors } from '@/domain/pots'
 
@@ -32,6 +33,8 @@ const props = defineProps<{
 
 const emit = defineEmits<{ submit: [input: BudgetInput]; close: [] }>()
 
+const { focusFirstInvalid } = useInvalidFocus('form')
+
 const category = ref<Category>(CATEGORIES[0])
 const maximum = ref('')
 const theme = ref<Theme>('green')
@@ -40,15 +43,21 @@ const errors = ref<FieldErrors<BudgetInput>>({})
 const isEditing = computed(() => Boolean(props.budget))
 
 const takenThemes = computed(() =>
-  props.existing.filter((entry) => entry.id !== props.budget?.id).map((entry) => entry.theme),
+  props.existing
+    .filter((entry) => entry.id !== props.budget?.id)
+    .map((entry) => entry.theme),
 )
 
 const takenCategories = computed(() =>
-  props.existing.filter((entry) => entry.id !== props.budget?.id).map((entry) => entry.category),
+  props.existing
+    .filter((entry) => entry.id !== props.budget?.id)
+    .map((entry) => entry.category),
 )
 
 function firstFreeCategory(): Category {
-  return CATEGORIES.find((entry) => !takenCategories.value.includes(entry)) ?? CATEGORIES[0]
+  return (
+    CATEGORIES.find((entry) => !takenCategories.value.includes(entry)) ?? CATEGORIES[0]
+  )
 }
 
 function firstFreeTheme(): Theme {
@@ -82,7 +91,7 @@ function onSubmit() {
   }
 
   errors.value = validateBudget(input, props.existing, props.budget?.id)
-  if (!isValid(errors.value)) return
+  if (!isValid(errors.value)) return focusFirstInvalid()
 
   emit('submit', input)
 }
@@ -99,7 +108,7 @@ function onSubmit() {
     "
     @close="emit('close')"
   >
-    <form class="c-budget-form" novalidate @submit.prevent="onSubmit">
+    <form ref="form" class="c-budget-form" novalidate @submit.prevent="onSubmit">
       <AppSelect
         v-model="category"
         label="Kategorie"
@@ -108,7 +117,11 @@ function onSubmit() {
         stacked
       />
 
-      <AppNumberField v-model="maximum" label="Maximale Ausgaben" :error="errors.maximum" />
+      <AppNumberField
+        v-model="maximum"
+        label="Maximale Ausgaben"
+        :error="errors.maximum"
+      />
 
       <AppThemeSelect
         v-model="theme"

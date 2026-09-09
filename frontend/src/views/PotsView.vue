@@ -7,7 +7,7 @@
  * nothing here does arithmetic of its own.
  */
 
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import type { Pot } from '@shared/types/finance'
 import BaseButton from '@/components/atoms/BaseButton.vue'
@@ -52,6 +52,27 @@ function confirmDelete() {
   if (dialog.value?.kind === 'delete') finance.removePot(dialog.value.pot.id)
   close()
 }
+
+/**
+ * Both strings are built here rather than in the template. The dialog stays
+ * mounted while closed so it can hand focus back, so the wording has to hold
+ * up with nothing selected — and the ternaries the discriminated union needs
+ * are easier to read in script than inside an attribute.
+ */
+const deleteTarget = computed(() =>
+  dialog.value?.kind === 'delete' ? dialog.value.pot : null,
+)
+
+const deleteTitle = computed(() =>
+  deleteTarget.value ? `„${deleteTarget.value.name}“ löschen?` : 'Sparziel löschen?',
+)
+
+const deleteDescription = computed(() => {
+  const saved = deleteTarget.value
+    ? ` Die darin gesparten ${formatCurrency(deleteTarget.value.total)}`
+    : ' Das Gesparte'
+  return `Soll dieses Sparziel wirklich gelöscht werden?${saved} gehen zurück auf deinen Kontostand. Das lässt sich nicht rückgängig machen.`
+})
 </script>
 
 <template>
@@ -102,10 +123,8 @@ function confirmDelete() {
 
   <ConfirmDialog
     :open="dialog?.kind === 'delete'"
-    :title="`'${dialog?.kind === 'delete' ? dialog.pot.name : ''}' löschen?`"
-    :description="`Soll dieses Sparziel wirklich gelöscht werden? Die darin gesparten ${
-      dialog?.kind === 'delete' ? formatCurrency(dialog.pot.total) : ''
-    } gehen zurück auf deinen Kontostand. Das lässt sich nicht rückgängig machen.`"
+    :title="deleteTitle"
+    :description="deleteDescription"
     confirm-label="Ja, endgültig löschen"
     @confirm="confirmDelete"
     @close="close"

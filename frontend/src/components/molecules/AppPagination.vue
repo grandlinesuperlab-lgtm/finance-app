@@ -172,11 +172,15 @@ function go(page: number) {
   display: block;
 }
 
+// Hidden visually, never with display:none. These two buttons contain nothing
+// but an icon below the md layout, so removing the label from the
+// accessibility tree would leave them unnamed — the same mistake the
+// navigation made, caught here by an axe run rather than by reading.
 .c-app-pagination__step-label {
-  display: none;
+  @include mx.visually-hidden;
 
   @include mx.from('md') {
-    display: block;
+    @include mx.visually-shown;
   }
 }
 </style>

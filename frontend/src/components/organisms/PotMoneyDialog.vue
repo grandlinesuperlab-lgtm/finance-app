@@ -16,6 +16,7 @@ import type { Balance, Pot } from '@shared/types/finance'
 import AppNumberField from '@/components/atoms/AppNumberField.vue'
 import BaseButton from '@/components/atoms/BaseButton.vue'
 import AppDialog from '@/components/molecules/AppDialog.vue'
+import { useInvalidFocus } from '@/composables/useInvalidFocus'
 import { deposit, potProgress, withdraw } from '@/domain/pots'
 import { formatCurrency, formatPercent } from '@/utils/format'
 
@@ -28,6 +29,8 @@ const props = defineProps<{
 
 const emit = defineEmits<{ submit: [amount: number]; close: [] }>()
 
+const { focusFirstInvalid } = useInvalidFocus('form')
+
 const amount = ref('')
 const error = ref<string | undefined>()
 
@@ -38,6 +41,12 @@ const limit = computed(() =>
 )
 
 const parsed = computed(() => Number.parseFloat(amount.value.replace(',', '.')))
+
+/** Named here so the closed dialog never carries "'undefined'" in the DOM. */
+const title = computed(() => {
+  const verb = isDeposit.value ? 'Einzahlen auf' : 'Auszahlen von'
+  return props.pot ? `${verb} „${props.pot.name}“` : verb
+})
 
 /**
  * The preview runs the same domain function the store will run, so what the
@@ -69,6 +78,7 @@ function onSubmit() {
 
   if (!booking.ok) {
     error.value = booking.error
+    void focusFirstInvalid()
     return
   }
 
@@ -79,7 +89,7 @@ function onSubmit() {
 <template>
   <AppDialog
     :open="props.open"
-    :title="`${isDeposit ? 'Einzahlen auf' : 'Auszahlen von'} '${props.pot?.name}'`"
+    :title="title"
     :description="
       isDeposit
         ? 'Lege Geld beiseite, getrennt von deinem Kontostand.'
@@ -87,7 +97,13 @@ function onSubmit() {
     "
     @close="emit('close')"
   >
-    <form v-if="props.pot" class="c-pot-money" novalidate @submit.prevent="onSubmit">
+    <form
+      v-if="props.pot"
+      ref="form"
+      class="c-pot-money"
+      novalidate
+      @submit.prevent="onSubmit"
+    >
       <dl class="c-pot-money__preview">
         <dt class="c-pot-money__preview-label">Neuer Stand</dt>
         <dd class="c-pot-money__preview-value">

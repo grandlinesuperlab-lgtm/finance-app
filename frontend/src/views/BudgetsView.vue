@@ -58,6 +58,17 @@ function confirmDelete() {
   if (budget) finance.removeBudget(budget.id)
   close()
 }
+
+/**
+ * The dialog stays mounted while closed so that it can hand focus back to the
+ * button that opened it. Its title therefore has to read sensibly with nothing
+ * selected — interpolating the category directly left the string "'undefined'
+ * löschen?" sitting in the DOM, which a structure probe found before a user
+ * ever could.
+ */
+const deleteTitle = computed(() =>
+  dialog.value?.budget ? `„${dialog.value.budget.category}“ löschen?` : 'Budget löschen?',
+)
 </script>
 
 <template>
@@ -94,7 +105,9 @@ function confirmDelete() {
           <dt class="c-summary-label">{{ summary.budget.category }}</dt>
           <dd class="c-summary-value">
             <MoneyAmount :amount="summary.spent" />
-            <span class="c-summary-of">von {{ formatCurrency(summary.budget.maximum) }}</span>
+            <span class="c-summary-of"
+              >von {{ formatCurrency(summary.budget.maximum) }}</span
+            >
           </dd>
         </div>
       </dl>
@@ -126,7 +139,7 @@ function confirmDelete() {
 
   <ConfirmDialog
     :open="dialog?.kind === 'delete'"
-    :title="`'${dialog?.budget?.category}' löschen?`"
+    :title="deleteTitle"
     description="Soll dieses Budget wirklich gelöscht werden? Das lässt sich nicht rückgängig machen."
     confirm-label="Ja, endgültig löschen"
     @confirm="confirmDelete"

@@ -8,21 +8,24 @@
 
 import { computed } from 'vue'
 
-import { formatCurrency, formatSignedCurrency } from '@/utils/format'
+import { formatCurrency, formatCurrencyWhole, formatSignedCurrency } from '@/utils/format'
 
 const props = withDefaults(
   defineProps<{
     amount: number
     /** Render a leading + or -. Off for totals, where direction is implied. */
     signed?: boolean
+    /** Drop the cents, for headline figures where they are noise. */
+    whole?: boolean
     size?: 'sm' | 'md' | 'lg'
   }>(),
-  { signed: false, size: 'sm' },
+  { signed: false, whole: false, size: 'sm' },
 )
 
-const text = computed(() =>
-  props.signed ? formatSignedCurrency(props.amount) : formatCurrency(props.amount),
-)
+const text = computed(() => {
+  if (props.signed) return formatSignedCurrency(props.amount)
+  return props.whole ? formatCurrencyWhole(props.amount) : formatCurrency(props.amount)
+})
 </script>
 
 <template>

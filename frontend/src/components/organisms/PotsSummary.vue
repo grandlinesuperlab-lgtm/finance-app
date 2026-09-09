@@ -31,7 +31,7 @@ const props = withDefaults(
       <dl class="c-pots-summary__total">
         <AppIcon class="c-pots-summary__icon" name="jar" />
         <dt class="c-pots-summary__total-label">Total Saved</dt>
-        <dd><MoneyAmount :amount="props.totalSaved" size="lg" /></dd>
+        <dd><MoneyAmount :amount="props.totalSaved" size="lg" whole /></dd>
       </dl>
 
       <!--
@@ -80,10 +80,15 @@ const props = withDefaults(
   border-radius: var(--radius-md);
 }
 
+// The headline drops its cents, as in the design. With them the figure alone
+// was wider than the tile's content box, and the auto-sized icon column was
+// squeezed to zero — the icon vanished rather than the number wrapping.
 .c-pots-summary__icon {
   grid-row: 1 / 3;
   grid-column: 1;
   align-self: center;
+  width: 2rem;
+  height: 2rem;
   color: var(--color-accent);
 }
 

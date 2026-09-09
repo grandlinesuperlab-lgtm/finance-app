@@ -9,9 +9,12 @@
 import { computed } from 'vue'
 
 import BaseButton from '@/components/atoms/BaseButton.vue'
+import OverviewSkeleton from '@/components/molecules/OverviewSkeleton.vue'
 import BalanceSummary from '@/components/organisms/BalanceSummary.vue'
 import PotsSummary from '@/components/organisms/PotsSummary.vue'
 import RecentTransactions from '@/components/organisms/RecentTransactions.vue'
+import BudgetsSummary from '@/components/organisms/BudgetsSummary.vue'
+import RecurringBillsSummary from '@/components/organisms/RecurringBillsSummary.vue'
 import { latestTransactions } from '@/domain/transactions'
 import { useFinanceStore } from '@/stores/finance'
 
@@ -30,7 +33,9 @@ const recent = computed(() => latestTransactions(finance.transactions, RECENT_CO
     <BaseButton variant="secondary" @click="finance.load()">Try again</BaseButton>
   </p>
 
-  <div v-else class="l-overview" :aria-busy="finance.isLoading || undefined">
+  <OverviewSkeleton v-else-if="finance.isLoading" />
+
+  <div v-else class="l-overview">
     <BalanceSummary class="l-overview__balance" :balance="finance.balance" />
 
     <!--
@@ -44,7 +49,10 @@ const recent = computed(() => latestTransactions(finance.transactions, RECENT_CO
       <RecentTransactions :transactions="recent" />
     </div>
 
-    <div class="l-overview__column"></div>
+    <div class="l-overview__column">
+      <BudgetsSummary :summaries="finance.budgetSummaries" />
+      <RecurringBillsSummary :totals="finance.billTotals" />
+    </div>
   </div>
 </template>
 
@@ -86,4 +94,5 @@ const recent = computed(() => latestTransactions(finance.transactions, RECENT_CO
   gap: var(--space-6);
   align-content: start;
 }
+
 </style>

@@ -101,6 +101,14 @@ export default [
   },
 
   {
+    // A loading skeleton is the one honest use of meaningless boxes: each one
+    // stands for content that does not exist yet, so no element carries its
+    // meaning. The rule's premise does not apply here — and nowhere else.
+    files: ['src/components/molecules/OverviewSkeleton.vue'],
+    rules: { 'local/div-budget': ['error', { max: 8 }] },
+  },
+
+  {
     // The rule implementation itself runs in Node, not the browser.
     files: ['eslint-rules/**/*.js', '*.config.{js,ts}'],
     languageOptions: { globals: { ...globals.node } },

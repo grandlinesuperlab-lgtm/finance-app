@@ -4,8 +4,8 @@
 </script>
 
 <template>
-  <h1>Übersicht</h1>
-  <p>Das Dashboard wird hier aufgebaut.</p>
+  <h1>Overview</h1>
+  <p>This page is being built.</p>
 </template>
 
 <style scoped lang="scss">

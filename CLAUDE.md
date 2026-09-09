@@ -23,7 +23,10 @@ npm run format       # prettier
 
 ## Rules
 
-- Code, comments, commit messages and identifiers are **English**. UI copy is **German**.
+- Code, comments, commit messages and identifiers are **English**, and so is
+  every string a user sees. The design this app reproduces is English and
+  denominated in dollars, so German labels would fight the layout and the data.
+  Formatting locale is `en-US`.
 - Conventional Commits (`feat:`, `fix:`, `refactor:`, `style:`, `docs:`, `chore:`).
   One logical change per commit.
 - Branches: `main` holds what is presentable at any moment. `develop` collects

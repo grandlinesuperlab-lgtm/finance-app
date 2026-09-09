@@ -4,12 +4,12 @@
 </script>
 
 <template>
-  <a class="u-skip-link" href="#main">Zum Hauptinhalt springen</a>
+  <a class="u-skip-link" href="#main">Skip to main content</a>
 
   <div class="l-app">
     <header class="l-app__header">
       <div class="l-container">
-        <p class="l-app__brand">Finanzportal</p>
+        <p class="l-app__brand">finance</p>
       </div>
     </header>
 
@@ -21,7 +21,7 @@
 
     <footer class="l-app__footer">
       <div class="l-container">
-        <p>Demo-Anwendung. Keine Anlageberatung.</p>
+        <p>Demo application. Data is stored in your browser only.</p>
       </div>
     </footer>
   </div>

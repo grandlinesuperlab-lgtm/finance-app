@@ -8,7 +8,7 @@ export const router = createRouter({
       name: 'dashboard',
       // Eager: this is the entry screen, so there is nothing to gain by splitting it.
       component: () => import('@/views/DashboardView.vue'),
-      meta: { title: 'Übersicht' },
+      meta: { title: 'Overview' },
     },
   ],
   scrollBehavior: (_to, _from, savedPosition) => savedPosition ?? { top: 0 },

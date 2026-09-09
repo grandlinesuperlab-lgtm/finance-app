@@ -50,15 +50,15 @@ defineExpose({ focusCaption })
 
     <thead>
       <tr>
-        <th class="c-transactions-table__head" scope="col">Recipient / Sender</th>
+        <th class="c-transactions-table__head" scope="col">Empfänger / Absender</th>
         <th class="c-transactions-table__head c-transactions-table__head--wide" scope="col">
-          Category
+          Kategorie
         </th>
         <th class="c-transactions-table__head c-transactions-table__head--wide" scope="col">
-          Transaction Date
+          Datum
         </th>
         <th class="c-transactions-table__head c-transactions-table__head--end" scope="col">
-          Amount
+          Betrag
         </th>
       </tr>
     </thead>

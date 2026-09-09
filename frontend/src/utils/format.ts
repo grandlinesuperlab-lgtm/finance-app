@@ -7,12 +7,11 @@
  * seam that can be tested without rendering anything.
  */
 
-const LOCALE = 'en-US'
-
-// The interface is English, so the number layout stays en-US — symbol first,
-// comma thousands: "€6,692.52". Switching to de-DE would also move the symbol
-// behind the amount and swap the separators, which reads oddly next to English
-// labels. Currency and number layout are two decisions, and only one changed.
+// Die Oberfläche ist deutsch, also auch das Zahlenformat: Punkt als
+// Tausendertrennung, Komma für Nachkommastellen, Währungszeichen hinter dem
+// Betrag — "6.692,52 €". Das weicht vom Layout der Design-Vorlage ab, die das
+// Zeichen voranstellt, entspricht aber dem, was ein deutscher Nutzer erwartet.
+const LOCALE = 'de-DE'
 const CURRENCY = 'EUR'
 
 const currency = new Intl.NumberFormat(LOCALE, {
@@ -27,10 +26,7 @@ const currencyWhole = new Intl.NumberFormat(LOCALE, {
   maximumFractionDigits: 0,
 })
 
-// Dates use en-GB rather than en-US: the design writes them day-first
-// ("19 Aug 2024"), and en-US would render "Aug 19, 2024". Currency stays
-// en-US — the two are separate decisions, so they get separate formatters.
-const dateFormatter = new Intl.DateTimeFormat('en-GB', {
+const dateFormatter = new Intl.DateTimeFormat(LOCALE, {
   day: '2-digit',
   month: 'short',
   year: 'numeric',
@@ -77,14 +73,14 @@ export function formatPercent(fraction: number): string {
   return `${Math.round(fraction * 100)}%`
 }
 
-/** `19th` — for the day a recurring bill falls due. */
+/**
+ * `19.` — der Tag, an dem ein Dauerauftrag fällig wird.
+ *
+ * Im Deutschen ist die Ordnungszahl schlicht die Ziffer mit einem Punkt, ohne
+ * die englischen Sonderfälle für 1, 2 und 3.
+ */
 export function formatOrdinalDay(day: number): string {
-  const remainderTen = day % 10
-  const remainderHundred = day % 100
-  if (remainderTen === 1 && remainderHundred !== 11) return `${day}st`
-  if (remainderTen === 2 && remainderHundred !== 12) return `${day}nd`
-  if (remainderTen === 3 && remainderHundred !== 13) return `${day}rd`
-  return `${day}th`
+  return `${day}.`
 }
 
 /**

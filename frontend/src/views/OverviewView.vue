@@ -26,11 +26,11 @@ const recent = computed(() => latestTransactions(finance.transactions, RECENT_CO
 </script>
 
 <template>
-  <h1 class="c-page-title">Overview</h1>
+  <h1 class="c-page-title">Übersicht</h1>
 
   <p v-if="finance.status === 'error'" class="c-page-message">
-    We could not load your data.
-    <BaseButton variant="secondary" @click="finance.load()">Try again</BaseButton>
+    Deine Daten konnten nicht geladen werden.
+    <BaseButton variant="secondary" @click="finance.load()">Erneut versuchen</BaseButton>
   </p>
 
   <OverviewSkeleton v-else-if="finance.isLoading" />

@@ -32,7 +32,7 @@ const emit = defineEmits<{ confirm: []; close: [] }>()
       <BaseButton variant="primary" block @click="emit('confirm')">
         {{ props.confirmLabel }}
       </BaseButton>
-      <BaseButton variant="tertiary" block @click="emit('close')">No, go back</BaseButton>
+      <BaseButton variant="tertiary" block @click="emit('close')">Nein, zurück</BaseButton>
     </div>
   </AppDialog>
 </template>

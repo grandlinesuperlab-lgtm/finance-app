@@ -81,7 +81,7 @@ function onBackdropClick(event: MouseEvent) {
         <h2 :id="titleId" class="c-app-dialog__title">{{ props.title }}</h2>
         <button class="c-app-dialog__close" type="button" @click="emit('close')">
           <AppIcon name="close" />
-          <span class="u-visually-hidden">Close</span>
+          <span class="u-visually-hidden">Schließen</span>
         </button>
       </header>
 

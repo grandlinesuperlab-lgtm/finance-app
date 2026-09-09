@@ -14,13 +14,13 @@ export const router = createRouter({
       path: '/',
       name: 'overview',
       component: () => import('@/views/OverviewView.vue'),
-      meta: { title: 'Overview' },
+      meta: { title: 'Übersicht' },
     },
     {
       path: '/transactions',
       name: 'transactions',
       component: () => import('@/views/TransactionsView.vue'),
-      meta: { title: 'Transactions' },
+      meta: { title: 'Transaktionen' },
     },
     {
       path: '/budgets',
@@ -32,13 +32,13 @@ export const router = createRouter({
       path: '/pots',
       name: 'pots',
       component: () => import('@/views/PotsView.vue'),
-      meta: { title: 'Pots' },
+      meta: { title: 'Sparziele' },
     },
     {
       path: '/recurring-bills',
       name: 'recurring-bills',
       component: () => import('@/views/RecurringBillsView.vue'),
-      meta: { title: 'Recurring Bills' },
+      meta: { title: 'Daueraufträge' },
     },
     {
       // Anything else lands on the overview rather than a blank screen.

@@ -25,12 +25,12 @@ const props = withDefaults(
 
 <template>
   <AppCard as="section">
-    <SectionHeader title="Pots" to="/pots" destination="pots" />
+    <SectionHeader title="Sparziele" to="/pots" destination="Sparziele" />
 
     <div class="c-pots-summary">
       <dl class="c-pots-summary__total">
         <AppIcon class="c-pots-summary__icon" name="jar" />
-        <dt class="c-pots-summary__total-label">Total Saved</dt>
+        <dt class="c-pots-summary__total-label">Gesamt gespart</dt>
         <dd><MoneyAmount :amount="props.totalSaved" size="lg" whole /></dd>
       </dl>
 
@@ -52,7 +52,7 @@ const props = withDefaults(
         </div>
       </dl>
 
-      <p v-else class="c-pots-summary__empty">No pots yet. Set one up to start saving.</p>
+      <p v-else class="c-pots-summary__empty">Noch keine Sparziele. Lege eines an, um loszulegen.</p>
     </div>
   </AppCard>
 </template>

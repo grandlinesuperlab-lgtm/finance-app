@@ -75,35 +75,35 @@ function onSubmit() {
 <template>
   <AppDialog
     :open="props.open"
-    :title="isEditing ? 'Edit Pot' : 'Add New Pot'"
+    :title="isEditing ? 'Sparziel bearbeiten' : 'Neues Sparziel'"
     :description="
       isEditing
-        ? 'If your saving targets change, feel free to update your pot.'
-        : 'Create a pot to set savings targets. These can help keep you on track as you save for special purchases.'
+        ? 'Passe dein Sparziel an, wenn sich etwas ändert.'
+        : 'Lege ein Sparziel an, um gezielt auf eine Anschaffung hinzusparen.'
     "
     @close="emit('close')"
   >
     <form class="c-pot-form" novalidate @submit.prevent="onSubmit">
       <AppTextField
         v-model="name"
-        label="Pot Name"
-        placeholder="e.g. Rainy Days"
+        label="Name"
+        placeholder="z. B. Notgroschen"
         :maxlength="NAME_LIMIT"
-        :hint="`${remaining} characters left`"
+        :hint="`Noch ${remaining} Zeichen`"
         :error="errors.name"
       />
 
-      <AppNumberField v-model="target" label="Target" :error="errors.target" />
+      <AppNumberField v-model="target" label="Sparziel" :error="errors.target" />
 
       <AppThemeSelect
         v-model="theme"
-        label="Colour Tag"
+        label="Farbe"
         :taken="takenThemes"
         :error="errors.theme"
       />
 
       <BaseButton type="submit" block>
-        {{ isEditing ? 'Save Changes' : 'Add Pot' }}
+        {{ isEditing ? 'Änderungen speichern' : 'Sparziel anlegen' }}
       </BaseButton>
     </form>
   </AppDialog>

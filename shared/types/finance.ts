@@ -12,23 +12,28 @@
  */
 
 /** ISO 8601 timestamp, e.g. "2024-08-19T14:23:11Z". */
-export type IsoDateTime = string;
+export type IsoDateTime = string
 
-/** The ten spending categories the app knows about. */
+/**
+ * Die zehn Ausgabenkategorien der App.
+ *
+ * Die Werte sind deutsch, weil die Oberfläche deutsch ist und gespeicherte
+ * Daten dieselbe Sprache sprechen sollen wie das, was der Nutzer sieht.
+ */
 export const CATEGORIES = [
-  "Entertainment",
-  "Bills",
-  "Groceries",
-  "Dining Out",
-  "Transportation",
-  "Personal Care",
-  "Education",
-  "Lifestyle",
-  "Shopping",
-  "General",
-] as const;
+  'Unterhaltung',
+  'Rechnungen',
+  'Lebensmittel',
+  'Restaurant',
+  'Transport',
+  'Körperpflege',
+  'Bildung',
+  'Freizeit',
+  'Einkäufe',
+  'Allgemein',
+] as const
 
-export type Category = (typeof CATEGORIES)[number];
+export type Category = (typeof CATEGORIES)[number]
 
 /**
  * The fifteen theme colours a budget or pot can carry.
@@ -37,30 +42,30 @@ export type Category = (typeof CATEGORIES)[number];
  * the design system, so a re-theme never has to touch stored data.
  */
 export const THEMES = [
-  "green",
-  "yellow",
-  "cyan",
-  "navy",
-  "red",
-  "purple",
-  "light-purple",
-  "turquoise",
-  "brown",
-  "magenta",
-  "blue",
-  "grey",
-  "army",
-  "gold",
-  "orange",
-] as const;
+  'green',
+  'yellow',
+  'cyan',
+  'navy',
+  'red',
+  'purple',
+  'light-purple',
+  'turquoise',
+  'brown',
+  'magenta',
+  'blue',
+  'grey',
+  'army',
+  'gold',
+  'orange',
+] as const
 
-export type Theme = (typeof THEMES)[number];
+export type Theme = (typeof THEMES)[number]
 
 /** Headline figures for the account. */
 export interface Balance {
-  current: number;
-  income: number;
-  expenses: number;
+  current: number
+  income: number
+  expenses: number
 }
 
 /**
@@ -68,39 +73,39 @@ export interface Balance {
  * income — the same convention the source data uses.
  */
 export interface Transaction {
-  id: string;
+  id: string
   /** Counterparty name; also the source of the generated avatar initials. */
-  name: string;
-  category: Category;
-  date: IsoDateTime;
-  amount: number;
+  name: string
+  category: Category
+  date: IsoDateTime
+  amount: number
   /** True when this is one instalment of a repeating payment. */
-  recurring: boolean;
+  recurring: boolean
 }
 
 /** A spending cap for one category. */
 export interface Budget {
-  id: string;
-  category: Category;
+  id: string
+  category: Category
   /** The cap for the current month. */
-  maximum: number;
-  theme: Theme;
+  maximum: number
+  theme: Theme
 }
 
 /** A savings goal money can be moved into and out of. */
 export interface Pot {
-  id: string;
-  name: string;
-  target: number;
+  id: string
+  name: string
+  target: number
   /** Amount saved so far. */
-  total: number;
-  theme: Theme;
+  total: number
+  theme: Theme
 }
 
 /** Everything the app holds. This is what the repository reads and writes. */
 export interface FinanceData {
-  balance: Balance;
-  transactions: Transaction[];
-  budgets: Budget[];
-  pots: Pot[];
+  balance: Balance
+  transactions: Transaction[]
+  budgets: Budget[]
+  pots: Pot[]
 }

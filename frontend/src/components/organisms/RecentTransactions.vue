@@ -22,10 +22,10 @@ const props = defineProps<{ transactions: Transaction[] }>()
 <template>
   <AppCard as="section">
     <SectionHeader
-      title="Transactions"
+      title="Transaktionen"
       to="/transactions"
-      destination="transactions"
-      link-text="View All"
+      destination="Transaktionen"
+      link-text="Alle anzeigen"
     />
 
     <ul v-if="props.transactions.length" class="c-recent-transactions" role="list">
@@ -41,7 +41,7 @@ const props = defineProps<{ transactions: Transaction[] }>()
       </li>
     </ul>
 
-    <p v-else class="c-recent-transactions__empty">Nothing has moved yet.</p>
+    <p v-else class="c-recent-transactions__empty">Bisher hat sich nichts bewegt.</p>
   </AppCard>
 </template>
 

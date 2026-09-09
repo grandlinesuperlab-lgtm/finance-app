@@ -64,7 +64,7 @@ export const useFinanceStore = defineStore('finance', () => {
       data.value = await repository.load()
       status.value = 'ready'
     } catch {
-      error.value = 'We could not load your data. Please try again.'
+      error.value = 'Deine Daten konnten nicht geladen werden. Please try again.'
       status.value = 'error'
     }
   }
@@ -130,10 +130,10 @@ export const useFinanceStore = defineStore('finance', () => {
    * the caller gets the reason back and shows it on the field.
    */
   function moveMoney(id: string, amount: number, direction: 'in' | 'out'): Booking {
-    if (!data.value) return { ok: false, error: 'Your data is still loading.' }
+    if (!data.value) return { ok: false, error: 'Deine Daten werden noch geladen.' }
 
     const pot = data.value.pots.find((entry) => entry.id === id)
-    if (!pot) return { ok: false, error: 'That pot no longer exists.' }
+    if (!pot) return { ok: false, error: 'Dieses Sparziel existiert nicht mehr.' }
 
     const booking =
       direction === 'in'

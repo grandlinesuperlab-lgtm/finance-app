@@ -32,7 +32,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{ submit: [input: BudgetInput]; close: [] }>()
 
-const category = ref<Category>('Entertainment')
+const category = ref<Category>(CATEGORIES[0])
 const maximum = ref('')
 const theme = ref<Theme>('green')
 const errors = ref<FieldErrors<BudgetInput>>({})
@@ -91,34 +91,34 @@ function onSubmit() {
 <template>
   <AppDialog
     :open="props.open"
-    :title="isEditing ? 'Edit Budget' : 'Add New Budget'"
+    :title="isEditing ? 'Budget bearbeiten' : 'Neues Budget'"
     :description="
       isEditing
-        ? 'As your budgets change, feel free to update your spending limits.'
-        : 'Choose a category to set a spending budget. These categories can help you monitor spending.'
+        ? 'Passe dein Ausgabenlimit an, wenn sich etwas ändert.'
+        : 'Wähle eine Kategorie und setze ein Ausgabenlimit dafür.'
     "
     @close="emit('close')"
   >
     <form class="c-budget-form" novalidate @submit.prevent="onSubmit">
       <AppSelect
         v-model="category"
-        label="Budget Category"
+        label="Kategorie"
         :options="CATEGORIES"
         :error="errors.category"
         stacked
       />
 
-      <AppNumberField v-model="maximum" label="Maximum Spend" :error="errors.maximum" />
+      <AppNumberField v-model="maximum" label="Maximale Ausgaben" :error="errors.maximum" />
 
       <AppThemeSelect
         v-model="theme"
-        label="Colour Tag"
+        label="Farbe"
         :taken="takenThemes"
         :error="errors.theme"
       />
 
       <BaseButton type="submit" block>
-        {{ isEditing ? 'Save Changes' : 'Add Budget' }}
+        {{ isEditing ? 'Änderungen speichern' : 'Budget anlegen' }}
       </BaseButton>
     </form>
   </AppDialog>

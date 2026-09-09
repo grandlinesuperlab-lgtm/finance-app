@@ -56,19 +56,19 @@ function confirmDelete() {
 
 <template>
   <header class="c-page-header">
-    <h1 class="c-page-title">Pots</h1>
-    <BaseButton @click="dialog = { kind: 'form' }">+ Add New Pot</BaseButton>
+    <h1 class="c-page-title">Sparziele</h1>
+    <BaseButton @click="dialog = { kind: 'form' }">+ Neues Sparziel</BaseButton>
   </header>
 
   <p v-if="finance.status === 'error'" class="c-page-message">
-    We could not load your pots.
-    <BaseButton variant="secondary" @click="finance.load()">Try again</BaseButton>
+    Deine Sparziele konnten nicht geladen werden.
+    <BaseButton variant="secondary" @click="finance.load()">Erneut versuchen</BaseButton>
   </p>
 
   <OverviewSkeleton v-else-if="finance.isLoading" />
 
   <p v-else-if="!finance.pots.length" class="c-page-message">
-    No pots yet. Add one to start saving towards something.
+    Noch keine Sparziele. Lege eines an, um auf etwas hinzusparen.
   </p>
 
   <div v-else class="l-pots">
@@ -102,11 +102,11 @@ function confirmDelete() {
 
   <ConfirmDialog
     :open="dialog?.kind === 'delete'"
-    :title="`Delete '${dialog?.kind === 'delete' ? dialog.pot.name : ''}'?`"
-    :description="`Are you sure you want to delete this pot? The ${
+    :title="`'${dialog?.kind === 'delete' ? dialog.pot.name : ''}' löschen?`"
+    :description="`Soll dieses Sparziel wirklich gelöscht werden? Die darin gesparten ${
       dialog?.kind === 'delete' ? formatCurrency(dialog.pot.total) : ''
-    } saved in it will be returned to your balance. This action cannot be reversed.`"
-    confirm-label="Yes, confirm deletion"
+    } gehen zurück auf deinen Kontostand. Das lässt sich nicht rückgängig machen.`"
+    confirm-label="Ja, endgültig löschen"
     @confirm="confirmDelete"
     @close="close"
   />

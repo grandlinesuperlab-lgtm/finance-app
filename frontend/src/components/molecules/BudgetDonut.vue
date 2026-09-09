@@ -75,7 +75,7 @@ const segments = computed(() => {
 
     <p class="c-budget-donut__centre">
       <MoneyAmount :amount="props.spent" size="lg" whole />
-      <span class="c-budget-donut__caption">of {{ formatCurrencyWhole(props.limit) }} limit</span>
+      <span class="c-budget-donut__caption">von {{ formatCurrencyWhole(props.limit) }} Limit</span>
     </p>
   </div>
 </template>

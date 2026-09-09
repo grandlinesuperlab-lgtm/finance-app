@@ -22,7 +22,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <a class="u-skip-link" href="#main">Skip to main content</a>
+  <a class="u-skip-link" href="#main">Zum Hauptinhalt springen</a>
 
   <div class="l-app">
     <AppNavigation class="l-app__nav" />

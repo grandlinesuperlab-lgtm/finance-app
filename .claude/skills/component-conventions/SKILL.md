@@ -75,10 +75,12 @@ A component that fetches data is not done until all four exist:
 
 ## Formatting
 
-Use `Intl.NumberFormat` and `Intl.DateTimeFormat` with the `en-US` locale, via
+Use `Intl.NumberFormat` and `Intl.DateTimeFormat` with the `de-DE` locale, via
 the helpers in `src/utils/format.ts`. Never hand-roll currency, percentage or
 date formatting, and never call `Intl` directly inside a component — the
 helpers are the seam the later test session needs.
+
+User-facing text is German. Code, comments and identifiers stay English.
 
 ## Before calling a component done
 

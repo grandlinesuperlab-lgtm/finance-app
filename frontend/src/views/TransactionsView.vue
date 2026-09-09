@@ -43,14 +43,14 @@ const state = computed(() => {
 
 const resultSummary = computed(() => {
   const { total } = page.value
-  const noun = total === 1 ? 'transaction' : 'transactions'
+  const noun = total === 1 ? 'Transaktion' : 'Transaktionen'
   return isFiltered.value
-    ? `${total} matching ${noun} of ${finance.transactions.length}`
+    ? `${total} passende von ${finance.transactions.length} ${noun}`
     : `${total} ${noun}`
 })
 
 const caption = computed(
-  () => `Transactions, page ${page.value.page} of ${page.value.pageCount}`,
+  () => `Transaktionen, Seite ${page.value.page} von ${page.value.pageCount}`,
 )
 
 async function goToPage(next: number) {
@@ -63,7 +63,7 @@ async function goToPage(next: number) {
 </script>
 
 <template>
-  <h1 class="c-page-title">Transactions</h1>
+  <h1 class="c-page-title">Transaktionen</h1>
 
   <AppCard as="section" :busy="state === 'loading'">
     <TransactionsToolbar
@@ -85,17 +85,17 @@ async function goToPage(next: number) {
     />
 
     <p v-else-if="state === 'error'" class="c-page-message">
-      We could not load your transactions.
-      <BaseButton variant="secondary" @click="finance.load()">Try again</BaseButton>
+      Deine Transaktionen konnten nicht geladen werden.
+      <BaseButton variant="secondary" @click="finance.load()">Erneut versuchen</BaseButton>
     </p>
 
     <p v-else-if="state === 'empty'" class="c-page-message">
-      There are no transactions yet. Once money moves in or out, it shows up here.
+      Noch keine Transaktionen. Sobald Geld fließt, erscheint es hier.
     </p>
 
     <p v-else class="c-page-message">
-      No transactions match your search.
-      <BaseButton variant="secondary" @click="clearFilters">Clear filters</BaseButton>
+      Keine Transaktion passt zu deiner Suche.
+      <BaseButton variant="secondary" @click="clearFilters">Filter zurücksetzen</BaseButton>
     </p>
 
     <AppPagination

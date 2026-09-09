@@ -105,12 +105,12 @@ export function summariseBills(bills: RecurringBill[]): BillTotals {
 }
 
 export const BILL_SORT_OPTIONS = [
-  'Latest',
-  'Oldest',
-  'A to Z',
-  'Z to A',
-  'Highest',
-  'Lowest',
+  'Neueste',
+  'Älteste',
+  'A bis Z',
+  'Z bis A',
+  'Höchster Betrag',
+  'Niedrigster Betrag',
 ] as const
 
 export type BillSortOption = (typeof BILL_SORT_OPTIONS)[number]
@@ -134,17 +134,17 @@ export function queryBills(
   const sorted = [...matched]
 
   switch (options.sort) {
-    case 'Latest':
+    case 'Neueste':
       return sorted.sort((a, b) => b.dueDay - a.dueDay)
-    case 'Oldest':
+    case 'Älteste':
       return sorted.sort((a, b) => a.dueDay - b.dueDay)
-    case 'A to Z':
+    case 'A bis Z':
       return sorted.sort((a, b) => a.name.localeCompare(b.name))
-    case 'Z to A':
+    case 'Z bis A':
       return sorted.sort((a, b) => b.name.localeCompare(a.name))
-    case 'Highest':
+    case 'Höchster Betrag':
       return sorted.sort((a, b) => b.amount - a.amount)
-    case 'Lowest':
+    case 'Niedrigster Betrag':
       return sorted.sort((a, b) => a.amount - b.amount)
   }
 }

@@ -23,10 +23,13 @@ npm run format       # prettier
 
 ## Rules
 
-- Code, comments, commit messages and identifiers are **English**, and so is
-  every string a user sees. The design this app reproduces is English and
-  denominated in dollars, so German labels would fight the layout and the data.
-  Formatting locale is `en-US`.
+- Code, comments, commit messages and identifiers are **English**. Every string
+  a user sees is **German**, and so are the stored category values — the app is
+  for a German-speaking audience, and data that is read back in the interface
+  should not need translating on the way. Formatting locale is `de-DE`
+  ("6.692,52 €", "19. Aug. 2024").
+- Theme keys (`green`, `cyan`, …) stay English: they are names of CSS tokens,
+  not data anybody reads. Their labels are translated at the point of display.
 - Conventional Commits (`feat:`, `fix:`, `refactor:`, `style:`, `docs:`, `chore:`).
   One logical change per commit.
 - Branches: `main` holds what is presentable at any moment. `develop` collects

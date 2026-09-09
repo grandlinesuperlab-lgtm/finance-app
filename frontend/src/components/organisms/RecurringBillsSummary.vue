@@ -15,18 +15,18 @@ import SectionHeader from '@/components/molecules/SectionHeader.vue'
 const props = defineProps<{ totals: BillTotals }>()
 
 const rows = [
-  { key: 'paid', label: 'Paid Bills', theme: 'green' },
-  { key: 'upcoming', label: 'Total Upcoming', theme: 'yellow' },
-  { key: 'dueSoon', label: 'Due Soon', theme: 'cyan' },
+  { key: 'paid', label: 'Bezahlt', theme: 'green' },
+  { key: 'upcoming', label: 'Ausstehend', theme: 'yellow' },
+  { key: 'dueSoon', label: 'Bald fällig', theme: 'cyan' },
 ] as const
 </script>
 
 <template>
   <AppCard as="section">
     <SectionHeader
-      title="Recurring Bills"
+      title="Daueraufträge"
       to="/recurring-bills"
-      destination="recurring bills"
+      destination="Daueraufträge"
     />
 
     <dl class="c-recurring-bills-summary">

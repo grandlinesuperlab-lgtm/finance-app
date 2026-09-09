@@ -22,8 +22,8 @@ export type Booking =
   | { ok: false; error: string }
 
 function invalidAmount(amount: number): string | null {
-  if (!Number.isFinite(amount)) return 'Enter an amount.'
-  if (amount <= 0) return 'Enter an amount greater than zero.'
+  if (!Number.isFinite(amount)) return 'Gib einen Betrag ein.'
+  if (amount <= 0) return 'Gib einen Betrag größer als null ein.'
   return null
 }
 
@@ -33,7 +33,7 @@ export function deposit(balance: Balance, pot: Pot, amount: number): Booking {
   if (problem) return { ok: false, error: problem }
 
   if (amount > balance.current) {
-    return { ok: false, error: 'That is more than your current balance.' }
+    return { ok: false, error: 'Das ist mehr als dein aktueller Kontostand.' }
   }
 
   return {
@@ -49,7 +49,7 @@ export function withdraw(balance: Balance, pot: Pot, amount: number): Booking {
   if (problem) return { ok: false, error: problem }
 
   if (amount > pot.total) {
-    return { ok: false, error: 'That is more than this pot holds.' }
+    return { ok: false, error: 'Das ist mehr, als in diesem Sparziel liegt.' }
   }
 
   return {
@@ -103,17 +103,17 @@ export function validatePot(
   const others = existing.filter((pot) => pot.id !== existingId)
 
   const name = input.name.trim()
-  if (!name) errors.name = 'Give this pot a name.'
+  if (!name) errors.name = 'Gib dem Sparziel einen Namen.'
   else if (others.some((pot) => pot.name.toLowerCase() === name.toLowerCase())) {
-    errors.name = 'You already have a pot with that name.'
+    errors.name = 'Ein Sparziel mit diesem Namen existiert bereits.'
   }
 
   if (!Number.isFinite(input.target) || input.target <= 0) {
-    errors.target = 'Set a target greater than zero.'
+    errors.target = 'Setze ein Ziel größer als null.'
   }
 
   if (others.some((pot) => pot.theme === input.theme)) {
-    errors.theme = 'That colour is already used by another pot.'
+    errors.theme = 'Diese Farbe ist bereits für ein anderes Sparziel vergeben.'
   }
 
   return errors

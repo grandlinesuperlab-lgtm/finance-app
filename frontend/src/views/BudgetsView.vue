@@ -63,19 +63,19 @@ function confirmDelete() {
 <template>
   <header class="c-page-header">
     <h1 class="c-page-title">Budgets</h1>
-    <BaseButton @click="openCreate">+ Add New Budget</BaseButton>
+    <BaseButton @click="openCreate">+ Neues Budget</BaseButton>
   </header>
 
   <p v-if="finance.status === 'error'" class="c-page-message">
-    We could not load your budgets.
-    <BaseButton variant="secondary" @click="finance.load()">Try again</BaseButton>
+    Deine Budgets konnten nicht geladen werden.
+    <BaseButton variant="secondary" @click="finance.load()">Erneut versuchen</BaseButton>
   </p>
 
   <OverviewSkeleton v-else-if="finance.isLoading" />
 
   <div v-else class="l-budgets">
     <AppCard as="section" class="l-budgets__summary">
-      <h2 class="c-summary-title">Spending Summary</h2>
+      <h2 class="c-summary-title">Ausgabenübersicht</h2>
 
       <BudgetDonut
         v-if="summaries.length"
@@ -94,13 +94,13 @@ function confirmDelete() {
           <dt class="c-summary-label">{{ summary.budget.category }}</dt>
           <dd class="c-summary-value">
             <MoneyAmount :amount="summary.spent" />
-            <span class="c-summary-of">of {{ formatCurrency(summary.budget.maximum) }}</span>
+            <span class="c-summary-of">von {{ formatCurrency(summary.budget.maximum) }}</span>
           </dd>
         </div>
       </dl>
 
       <p v-else class="c-page-message">
-        No budgets yet. Add one to start tracking a category.
+        Noch keine Budgets. Lege eines an, um eine Kategorie zu verfolgen.
       </p>
     </AppCard>
 
@@ -126,9 +126,9 @@ function confirmDelete() {
 
   <ConfirmDialog
     :open="dialog?.kind === 'delete'"
-    :title="`Delete '${dialog?.budget?.category}'?`"
-    description="Are you sure you want to delete this budget? This action cannot be reversed, and all the data inside it will be removed forever."
-    confirm-label="Yes, confirm deletion"
+    :title="`'${dialog?.budget?.category}' löschen?`"
+    description="Soll dieses Budget wirklich gelöscht werden? Das lässt sich nicht rückgängig machen."
+    confirm-label="Ja, endgültig löschen"
     @confirm="confirmDelete"
     @close="close"
   />

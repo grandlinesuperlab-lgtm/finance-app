@@ -51,7 +51,7 @@ const overspend = computed(() =>
         <button
           class="c-budget-card__action"
           type="button"
-          :aria-label="`Edit the ${props.summary.budget.category} budget`"
+          :aria-label="`Budget ${props.summary.budget.category} bearbeiten`"
           @click="emit('edit')"
         >
           <AppIcon name="edit" />
@@ -59,7 +59,7 @@ const overspend = computed(() =>
         <button
           class="c-budget-card__action"
           type="button"
-          :aria-label="`Delete the ${props.summary.budget.category} budget`"
+          :aria-label="`Budget ${props.summary.budget.category} löschen`"
           @click="emit('remove')"
         >
           <AppIcon name="trash" />
@@ -68,13 +68,13 @@ const overspend = computed(() =>
     </header>
 
     <p class="c-budget-card__maximum">
-      Maximum of {{ formatCurrency(props.summary.budget.maximum) }}
+      Maximal {{ formatCurrency(props.summary.budget.maximum) }}
     </p>
 
     <progress
       class="c-budget-card__bar"
       :style="{ '--marker': `var(--theme-${props.summary.budget.theme})` }"
-      :aria-label="`${props.summary.budget.category} budget used`"
+      :aria-label="`Budget ${props.summary.budget.category} verbraucht`"
       :class="{ 'c-budget-card__bar--over': props.summary.overspent }"
       :value="Math.min(props.summary.spent, props.summary.budget.maximum)"
       :max="props.summary.budget.maximum"
@@ -83,25 +83,25 @@ const overspend = computed(() =>
     </progress>
 
     <p v-if="props.summary.overspent" class="c-budget-card__over">
-      Over budget by {{ formatCurrency(overspend) }}.
+      {{ formatCurrency(overspend) }} über dem Budget.
     </p>
 
     <dl class="c-budget-card__figures">
-      <dt>Spent</dt>
+      <dt>Ausgegeben</dt>
       <dd><MoneyAmount :amount="props.summary.spent" /></dd>
-      <dt>Remaining</dt>
+      <dt>Verbleibend</dt>
       <dd><MoneyAmount :amount="props.summary.remaining" /></dd>
     </dl>
 
     <section class="c-budget-card__latest">
       <header class="c-budget-card__latest-header">
-        <h3 class="c-budget-card__latest-title">Latest Spending</h3>
+        <h3 class="c-budget-card__latest-title">Letzte Ausgaben</h3>
         <RouterLink
           class="c-budget-card__see-all"
           :to="{ path: '/transactions', query: { category: props.summary.budget.category } }"
-          :aria-label="`See all ${props.summary.budget.category} transactions`"
+          :aria-label="`Alle Transaktionen der Kategorie ${props.summary.budget.category} anzeigen`"
         >
-          See All
+          Alle anzeigen
           <AppIcon name="chevronRight" />
         </RouterLink>
       </header>
@@ -119,7 +119,7 @@ const overspend = computed(() =>
         </li>
       </ul>
 
-      <p v-else class="c-budget-card__empty">Nothing spent in this category yet.</p>
+      <p v-else class="c-budget-card__empty">In dieser Kategorie wurde noch nichts ausgegeben.</p>
     </section>
   </AppCard>
 </template>

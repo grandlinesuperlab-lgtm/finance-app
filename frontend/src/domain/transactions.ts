@@ -9,18 +9,18 @@ import type { Category, Transaction } from '@shared/types/finance'
  */
 
 export const SORT_OPTIONS = [
-  'Latest',
-  'Oldest',
-  'A to Z',
-  'Z to A',
-  'Highest',
-  'Lowest',
+  'Neueste',
+  'Älteste',
+  'A bis Z',
+  'Z bis A',
+  'Höchster Betrag',
+  'Niedrigster Betrag',
 ] as const
 
 export type SortOption = (typeof SORT_OPTIONS)[number]
 
 /** The category filter, widened by the "all categories" case. */
-export type CategoryFilter = Category | 'All Transactions'
+export type CategoryFilter = Category | 'Alle Transaktionen'
 
 export interface TransactionQuery {
   search: string
@@ -53,7 +53,7 @@ export function filterByCategory(
   transactions: Transaction[],
   category: CategoryFilter,
 ): Transaction[] {
-  if (category === 'All Transactions') return transactions
+  if (category === 'Alle Transaktionen') return transactions
   return transactions.filter((transaction) => transaction.category === category)
 }
 
@@ -65,21 +65,21 @@ export function sortTransactions(
   const sorted = [...transactions]
 
   switch (sort) {
-    case 'Latest':
+    case 'Neueste':
       return sorted.sort((a, b) => b.date.localeCompare(a.date))
-    case 'Oldest':
+    case 'Älteste':
       return sorted.sort((a, b) => a.date.localeCompare(b.date))
-    case 'A to Z':
+    case 'A bis Z':
       return sorted.sort((a, b) => a.name.localeCompare(b.name))
-    case 'Z to A':
+    case 'Z bis A':
       return sorted.sort((a, b) => b.name.localeCompare(a.name))
     // "Highest" and "Lowest" rank by the size of the movement, so an income of
     // 2500 and a payment of -2500 are equally large. Ranking by signed value
     // would put every payment below every income, which is not what the sort
     // is asking about.
-    case 'Highest':
+    case 'Höchster Betrag':
       return sorted.sort((a, b) => Math.abs(b.amount) - Math.abs(a.amount))
-    case 'Lowest':
+    case 'Niedrigster Betrag':
       return sorted.sort((a, b) => Math.abs(a.amount) - Math.abs(b.amount))
   }
 }
@@ -114,5 +114,5 @@ export function latestTransactions(
   transactions: Transaction[],
   limit: number,
 ): Transaction[] {
-  return sortTransactions(transactions, 'Latest').slice(0, limit)
+  return sortTransactions(transactions, 'Neueste').slice(0, limit)
 }

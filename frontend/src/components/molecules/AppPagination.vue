@@ -56,7 +56,7 @@ function go(page: number) {
 </script>
 
 <template>
-  <nav v-if="props.pageCount > 1" class="c-app-pagination" aria-label="Pagination">
+  <nav v-if="props.pageCount > 1" class="c-app-pagination" aria-label="Seitennummerierung">
     <ul class="c-app-pagination__list" role="list">
       <li>
         <button
@@ -66,7 +66,7 @@ function go(page: number) {
           @click="go(props.page - 1)"
         >
           <AppIcon name="chevronLeft" />
-          <span class="c-app-pagination__step-label">Prev</span>
+          <span class="c-app-pagination__step-label">Zurück</span>
         </button>
       </li>
 
@@ -79,7 +79,7 @@ function go(page: number) {
           :aria-current="slot === props.page ? 'page' : undefined"
           @click="go(slot)"
         >
-          <span class="u-visually-hidden">Page </span>{{ slot }}
+          <span class="u-visually-hidden">Seite </span>{{ slot }}
         </button>
       </li>
 
@@ -90,7 +90,7 @@ function go(page: number) {
           :disabled="props.page >= props.pageCount"
           @click="go(props.page + 1)"
         >
-          <span class="c-app-pagination__step-label">Next</span>
+          <span class="c-app-pagination__step-label">Weiter</span>
           <AppIcon name="chevronRight" />
         </button>
       </li>

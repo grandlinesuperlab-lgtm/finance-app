@@ -41,7 +41,7 @@ const progress = computed(() => potProgress(props.pot))
         <button
           class="c-pot-card__action"
           type="button"
-          :aria-label="`Edit the ${props.pot.name} pot`"
+          :aria-label="`Sparziel ${props.pot.name} bearbeiten`"
           @click="emit('edit')"
         >
           <AppIcon name="edit" />
@@ -49,7 +49,7 @@ const progress = computed(() => potProgress(props.pot))
         <button
           class="c-pot-card__action"
           type="button"
-          :aria-label="`Delete the ${props.pot.name} pot`"
+          :aria-label="`Sparziel ${props.pot.name} löschen`"
           @click="emit('remove')"
         >
           <AppIcon name="trash" />
@@ -58,14 +58,14 @@ const progress = computed(() => potProgress(props.pot))
     </header>
 
     <dl class="c-pot-card__total">
-      <dt class="c-pot-card__total-label">Total Saved</dt>
+      <dt class="c-pot-card__total-label">Gespart</dt>
       <dd><MoneyAmount :amount="props.pot.total" size="lg" /></dd>
     </dl>
 
     <progress
       class="c-pot-card__bar"
       :style="{ '--marker': `var(--theme-${props.pot.theme})` }"
-      :aria-label="`${props.pot.name} saved towards its target`"
+      :aria-label="`${props.pot.name}: Fortschritt zum Ziel`"
       :value="Math.min(props.pot.total, props.pot.target)"
       :max="props.pot.target"
     >
@@ -74,12 +74,12 @@ const progress = computed(() => potProgress(props.pot))
 
     <p class="c-pot-card__scale">
       <span class="c-pot-card__percent">{{ formatPercent(progress) }}</span>
-      <span>Target of {{ formatCurrency(props.pot.target) }}</span>
+      <span>Ziel: {{ formatCurrency(props.pot.target) }}</span>
     </p>
 
     <p class="c-pot-card__buttons">
-      <BaseButton variant="secondary" block @click="emit('add')">+ Add Money</BaseButton>
-      <BaseButton variant="secondary" block @click="emit('withdraw')">Withdraw</BaseButton>
+      <BaseButton variant="secondary" block @click="emit('add')">+ Einzahlen</BaseButton>
+      <BaseButton variant="secondary" block @click="emit('withdraw')">Auszahlen</BaseButton>
     </p>
   </AppCard>
 </template>

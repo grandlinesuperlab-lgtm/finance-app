@@ -19,7 +19,7 @@ const props = withDefaults(
     destination: string
     linkText?: string
   }>(),
-  { linkText: 'See Details' },
+  { linkText: 'Details' },
 )
 </script>
 

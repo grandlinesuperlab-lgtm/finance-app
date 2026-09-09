@@ -21,7 +21,7 @@ const totals = computed(() => totalsFor(props.summaries))
 
 <template>
   <AppCard as="section">
-    <SectionHeader title="Budgets" to="/budgets" destination="budgets" />
+    <SectionHeader title="Budgets" to="/budgets" destination="Budgets" />
 
     <div v-if="props.summaries.length" class="c-budgets-summary">
       <BudgetDonut
@@ -43,7 +43,7 @@ const totals = computed(() => totalsFor(props.summaries))
       </dl>
     </div>
 
-    <p v-else class="c-budgets-summary__empty">No budgets yet. Set one to start tracking.</p>
+    <p v-else class="c-budgets-summary__empty">Noch keine Budgets. Lege eines an, um Ausgaben zu verfolgen.</p>
   </AppCard>
 </template>
 

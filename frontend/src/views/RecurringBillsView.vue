@@ -24,7 +24,7 @@ import { useFinanceStore } from '@/stores/finance'
 const finance = useFinanceStore()
 
 const search = ref('')
-const sort = ref<BillSortOption>('Latest')
+const sort = ref<BillSortOption>('Neueste')
 
 const visible = computed(() =>
   queryBills(finance.recurringBills, { search: search.value, sort: sort.value }),
@@ -46,30 +46,30 @@ const counts = computed(() => ({
  * so the counts and the amounts are paired once instead of three times.
  */
 const summaryRows = computed(() => [
-  { key: 'paid', label: 'Paid Bills', count: counts.value.paid, amount: finance.billTotals.paid },
+  { key: 'paid', label: 'Bezahlt', count: counts.value.paid, amount: finance.billTotals.paid },
   {
     key: 'upcoming',
-    label: 'Total Upcoming',
+    label: 'Ausstehend',
     count: counts.value.upcoming,
     amount: finance.billTotals.upcoming,
   },
   {
     key: 'dueSoon',
-    label: 'Due Soon',
+    label: 'Bald fällig',
     count: counts.value.dueSoon,
     amount: finance.billTotals.dueSoon,
   },
 ])
 
-const caption = computed(() => `Recurring bills, ${visible.value.length} shown`)
+const caption = computed(() => `Daueraufträge, ${visible.value.length} angezeigt`)
 </script>
 
 <template>
-  <h1 class="c-page-title">Recurring Bills</h1>
+  <h1 class="c-page-title">Daueraufträge</h1>
 
   <p v-if="finance.status === 'error'" class="c-page-message">
-    We could not load your bills.
-    <BaseButton variant="secondary" @click="finance.load()">Try again</BaseButton>
+    Deine Daueraufträge konnten nicht geladen werden.
+    <BaseButton variant="secondary" @click="finance.load()">Erneut versuchen</BaseButton>
   </p>
 
   <OverviewSkeleton v-else-if="finance.isLoading" />
@@ -77,12 +77,12 @@ const caption = computed(() => `Recurring bills, ${visible.value.length} shown`)
   <div v-else class="l-bills">
     <div class="l-bills__aside">
       <AppCard as="section" class="c-total">
-        <h2 class="c-total__label">Total Bills</h2>
+        <h2 class="c-total__label">Summe</h2>
         <p class="c-total__value"><MoneyAmount :amount="total" size="lg" /></p>
       </AppCard>
 
       <AppCard as="section">
-        <h2 class="c-summary__title">Summary</h2>
+        <h2 class="c-summary__title">Übersicht</h2>
         <dl class="c-summary">
           <div v-for="row in summaryRows" :key="row.key" class="c-summary__row">
             <dt :class="{ 'c-summary__label--alert': row.key === 'dueSoon' }">
@@ -101,24 +101,24 @@ const caption = computed(() => `Recurring bills, ${visible.value.length} shown`)
         <AppSearchInput
           v-model="search"
           class="c-bills-toolbar__search"
-          label="Search bills by name"
-          placeholder="Search bills"
+          label="Daueraufträge nach Name durchsuchen"
+          placeholder="Dauerauftrag suchen"
         />
         <AppSelect
           v-model="sort"
-          label="Sort by"
+          label="Sortieren nach"
           :options="BILL_SORT_OPTIONS"
           @update:model-value="sort = $event as BillSortOption"
         />
       </div>
 
       <p class="c-page-status" role="status">
-        {{ visible.length }} of {{ finance.recurringBills.length }} bills
+        {{ visible.length }} von {{ finance.recurringBills.length }} Daueraufträgen
       </p>
 
       <RecurringBillsTable v-if="visible.length" :bills="visible" :caption="caption" />
 
-      <p v-else class="c-page-message">No bills match your search.</p>
+      <p v-else class="c-page-message">Kein Dauerauftrag passt zu deiner Suche.</p>
     </AppCard>
   </div>
 </template>

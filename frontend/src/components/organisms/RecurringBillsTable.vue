@@ -21,9 +21,9 @@ import { formatOrdinalDay } from '@/utils/format'
 const props = defineProps<{ bills: RecurringBill[]; caption: string }>()
 
 const STATUS_LABEL: Record<RecurringBill['status'], string> = {
-  paid: 'Paid',
-  'due-soon': 'Due soon',
-  upcoming: 'Upcoming',
+  paid: 'Bezahlt',
+  'due-soon': 'Bald fällig',
+  upcoming: 'Ausstehend',
 }
 </script>
 
@@ -37,9 +37,9 @@ const STATUS_LABEL: Record<RecurringBill['status'], string> = {
 
     <thead>
       <tr>
-        <th class="c-bills-table__head" scope="col">Bill Title</th>
-        <th class="c-bills-table__head c-bills-table__head--wide" scope="col">Due Date</th>
-        <th class="c-bills-table__head c-bills-table__head--end" scope="col">Amount</th>
+        <th class="c-bills-table__head" scope="col">Bezeichnung</th>
+        <th class="c-bills-table__head c-bills-table__head--wide" scope="col">Fällig</th>
+        <th class="c-bills-table__head c-bills-table__head--end" scope="col">Betrag</th>
       </tr>
     </thead>
 
@@ -55,14 +55,14 @@ const STATUS_LABEL: Record<RecurringBill['status'], string> = {
             <AppAvatar class="c-bills-table__avatar" :name="bill.name" />
             <span class="c-bills-table__title">{{ bill.name }}</span>
             <span class="c-bills-table__secondary">
-              Monthly — {{ formatOrdinalDay(bill.dueDay) }}
+              Monatlich am {{ formatOrdinalDay(bill.dueDay) }}
             </span>
           </span>
         </th>
 
         <td class="c-bills-table__due">
           <span class="c-bills-table__due-text" :class="`c-bills-table__due-text--${bill.status}`">
-            Monthly — {{ formatOrdinalDay(bill.dueDay) }}
+            Monatlich am {{ formatOrdinalDay(bill.dueDay) }}
             <!--
               The icon carries the status as its own accessible name, so the
               state is announced without a second hidden copy of the word.

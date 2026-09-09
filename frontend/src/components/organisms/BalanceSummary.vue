@@ -16,17 +16,17 @@ const props = defineProps<{ balance: Balance }>()
 <template>
   <dl class="c-balance-summary">
     <div class="c-balance-summary__item c-balance-summary__item--inverted">
-      <dt class="c-balance-summary__label">Current Balance</dt>
+      <dt class="c-balance-summary__label">Aktueller Kontostand</dt>
       <dd><MoneyAmount :amount="props.balance.current" size="lg" /></dd>
     </div>
 
     <div class="c-balance-summary__item">
-      <dt class="c-balance-summary__label">Income</dt>
+      <dt class="c-balance-summary__label">Einnahmen</dt>
       <dd><MoneyAmount :amount="props.balance.income" size="lg" /></dd>
     </div>
 
     <div class="c-balance-summary__item">
-      <dt class="c-balance-summary__label">Expenses</dt>
+      <dt class="c-balance-summary__label">Ausgaben</dt>
       <dd><MoneyAmount :amount="props.balance.expenses" size="lg" /></dd>
     </div>
   </dl>

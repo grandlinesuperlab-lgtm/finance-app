@@ -79,17 +79,17 @@ function onSubmit() {
 <template>
   <AppDialog
     :open="props.open"
-    :title="`${isDeposit ? 'Add to' : 'Withdraw from'} '${props.pot?.name}'`"
+    :title="`${isDeposit ? 'Einzahlen auf' : 'Auszahlen von'} '${props.pot?.name}'`"
     :description="
       isDeposit
-        ? 'Add money to your pot to keep it separate from your balance.'
-        : 'Withdraw from your pot to put money back in your main balance.'
+        ? 'Lege Geld beiseite, getrennt von deinem Kontostand.'
+        : 'Hole Geld aus dem Sparziel zurück auf deinen Kontostand.'
     "
     @close="emit('close')"
   >
     <form v-if="props.pot" class="c-pot-money" novalidate @submit.prevent="onSubmit">
       <dl class="c-pot-money__preview">
-        <dt class="c-pot-money__preview-label">New Amount</dt>
+        <dt class="c-pot-money__preview-label">Neuer Stand</dt>
         <dd class="c-pot-money__preview-value">
           {{ formatCurrency(preview?.total ?? props.pot.total) }}
         </dd>
@@ -98,25 +98,25 @@ function onSubmit() {
       <progress
         class="c-pot-money__bar"
         :style="{ '--marker': `var(--theme-${props.pot.theme})` }"
-        :aria-label="`${props.pot.name} after this change`"
+        :aria-label="`${props.pot.name} nach dieser Änderung`"
         :value="Math.min(preview?.total ?? 0, props.pot.target)"
         :max="props.pot.target"
       />
 
       <p class="c-pot-money__scale">
         <span>{{ formatPercent(potProgress(preview ?? props.pot)) }}</span>
-        <span>Target of {{ formatCurrency(props.pot.target) }}</span>
+        <span>Ziel: {{ formatCurrency(props.pot.target) }}</span>
       </p>
 
       <AppNumberField
         v-model="amount"
-        :label="isDeposit ? 'Amount to Add' : 'Amount to Withdraw'"
-        :hint="`You can ${isDeposit ? 'add' : 'withdraw'} up to ${formatCurrency(limit)}.`"
+        :label="isDeposit ? 'Betrag einzahlen' : 'Betrag auszahlen'"
+        :hint="`Du kannst bis zu ${formatCurrency(limit)} ${isDeposit ? 'einzahlen' : 'auszahlen'}.`"
         :error="error"
       />
 
       <BaseButton type="submit" block>
-        {{ isDeposit ? 'Confirm Addition' : 'Confirm Withdrawal' }}
+        {{ isDeposit ? 'Einzahlung bestätigen' : 'Auszahlung bestätigen' }}
       </BaseButton>
     </form>
   </AppDialog>

@@ -30,21 +30,21 @@ defineEmits<{
     <AppSearchInput
       class="c-transactions-toolbar__search"
       :model-value="props.search"
-      label="Search transactions by name"
-      placeholder="Search transaction"
+      label="Transaktionen nach Name durchsuchen"
+      placeholder="Transaktion suchen"
       @update:model-value="$emit('update:search', $event)"
     />
 
     <AppSelect
       :model-value="props.sort"
-      label="Sort by"
+      label="Sortieren nach"
       :options="SORT_OPTIONS"
       @update:model-value="$emit('update:sort', $event as SortOption)"
     />
 
     <AppSelect
       :model-value="props.category"
-      label="Category"
+      label="Kategorie"
       :options="CATEGORY_FILTERS"
       @update:model-value="$emit('update:category', $event as CategoryFilter)"
     />

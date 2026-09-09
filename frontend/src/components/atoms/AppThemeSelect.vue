@@ -32,10 +32,30 @@ defineEmits<{ 'update:modelValue': [value: Theme] }>()
 const id = useId()
 const errorId = `${id}-error`
 
-/** "light-purple" reads better as "Light purple" in a menu. */
+/**
+ * Die Theme-Schlüssel bleiben technisch, weil sie Namen von CSS-Tokens sind
+ * (`--theme-green`). Angezeigt wird der deutsche Name.
+ */
+const THEME_LABELS: Record<Theme, string> = {
+  green: 'Grün',
+  yellow: 'Gelb',
+  cyan: 'Türkis',
+  navy: 'Dunkelblau',
+  red: 'Rot',
+  purple: 'Violett',
+  'light-purple': 'Helllila',
+  turquoise: 'Petrol',
+  brown: 'Braun',
+  magenta: 'Magenta',
+  blue: 'Blau',
+  grey: 'Grau',
+  army: 'Olivgrün',
+  gold: 'Gold',
+  orange: 'Orange',
+}
+
 function labelFor(theme: Theme): string {
-  const words = theme.replace(/-/g, ' ')
-  return words.charAt(0).toUpperCase() + words.slice(1)
+  return THEME_LABELS[theme]
 }
 
 const options = computed(() =>
@@ -73,7 +93,7 @@ const options = computed(() =>
           :value="option.value"
           :disabled="option.disabled"
         >
-          {{ option.label }}{{ option.disabled ? ' — already used' : '' }}
+          {{ option.label }}{{ option.disabled ? ' — bereits vergeben' : '' }}
         </option>
       </select>
     </span>

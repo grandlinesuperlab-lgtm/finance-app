@@ -19,11 +19,11 @@ interface NavItem {
 }
 
 const items: NavItem[] = [
-  { to: '/', label: 'Overview', icon: 'overview' },
-  { to: '/transactions', label: 'Transactions', icon: 'transactions' },
+  { to: '/', label: 'Übersicht', icon: 'overview' },
+  { to: '/transactions', label: 'Transaktionen', icon: 'transactions' },
   { to: '/budgets', label: 'Budgets', icon: 'budgets' },
-  { to: '/pots', label: 'Pots', icon: 'pots' },
-  { to: '/recurring-bills', label: 'Recurring Bills', icon: 'bills' },
+  { to: '/pots', label: 'Sparziele', icon: 'pots' },
+  { to: '/recurring-bills', label: 'Daueraufträge', icon: 'bills' },
 ]
 
 const { collapsed, toggle } = useSidebarCollapsed()
@@ -33,7 +33,7 @@ const { collapsed, toggle } = useSidebarCollapsed()
   <nav
     class="c-app-navigation"
     :class="{ 'c-app-navigation--collapsed': collapsed }"
-    aria-label="Main"
+    aria-label="Hauptnavigation"
   >
     <p class="c-app-navigation__brand">
       <span :class="collapsed ? 'u-visually-hidden' : undefined">finance</span>
@@ -56,7 +56,7 @@ const { collapsed, toggle } = useSidebarCollapsed()
       @click="toggle"
     >
       <AppIcon :name="collapsed ? 'chevronRight' : 'chevronLeft'" />
-      <span class="c-app-navigation__label">Minimize Menu</span>
+      <span class="c-app-navigation__label">Menü einklappen</span>
     </button>
   </nav>
 </template>

@@ -131,17 +131,17 @@ export function validateBudget(
   const errors: FieldErrors<BudgetInput> = {}
   const others = existing.filter((budget) => budget.id !== existingId)
 
-  if (!input.category) errors.category = 'Choose a category.'
+  if (!input.category) errors.category = 'Wähle eine Kategorie.'
   else if (others.some((budget) => budget.category === input.category)) {
-    errors.category = 'That category already has a budget.'
+    errors.category = 'Für diese Kategorie gibt es bereits ein Budget.'
   }
 
   if (!Number.isFinite(input.maximum) || input.maximum <= 0) {
-    errors.maximum = 'Set a maximum greater than zero.'
+    errors.maximum = 'Setze ein Maximum größer als null.'
   }
 
   if (others.some((budget) => budget.theme === input.theme)) {
-    errors.theme = 'That colour is already used by another budget.'
+    errors.theme = 'Diese Farbe ist bereits für ein anderes Budget vergeben.'
   }
 
   return errors

@@ -22,10 +22,10 @@ import { useDebouncedRef } from './useDebouncedRef'
  * value must fall back to the default rather than reach the domain layer.
  */
 
-export const ALL_CATEGORIES = 'All Transactions' as const
+export const ALL_CATEGORIES = 'Alle Transaktionen' as const
 export const CATEGORY_FILTERS: readonly CategoryFilter[] = [ALL_CATEGORIES, ...CATEGORIES]
 
-const DEFAULT_SORT: SortOption = 'Latest'
+const DEFAULT_SORT: SortOption = 'Neueste'
 const PER_PAGE = 10
 
 function firstValue(value: unknown): string {

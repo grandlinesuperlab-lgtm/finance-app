@@ -19,6 +19,7 @@ import OverviewSkeleton from '@/components/molecules/OverviewSkeleton.vue'
 import BudgetFormDialog from '@/components/organisms/BudgetFormDialog.vue'
 import ConfirmDialog from '@/components/organisms/ConfirmDialog.vue'
 import { totalsFor, type BudgetInput } from '@/domain/budgets'
+import { formatCurrency } from '@/utils/format'
 import { useFinanceStore } from '@/stores/finance'
 
 const finance = useFinanceStore()
@@ -93,7 +94,7 @@ function confirmDelete() {
           <dt class="c-summary-label">{{ summary.budget.category }}</dt>
           <dd class="c-summary-value">
             <MoneyAmount :amount="summary.spent" />
-            <span class="c-summary-of">of {{ summary.budget.maximum.toFixed(2) }}</span>
+            <span class="c-summary-of">of {{ formatCurrency(summary.budget.maximum) }}</span>
           </dd>
         </div>
       </dl>

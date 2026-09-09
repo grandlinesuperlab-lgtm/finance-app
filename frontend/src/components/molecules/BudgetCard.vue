@@ -73,6 +73,7 @@ const overspend = computed(() =>
 
     <progress
       class="c-budget-card__bar"
+      :style="{ '--marker': `var(--theme-${props.summary.budget.theme})` }"
       :aria-label="`${props.summary.budget.category} budget used`"
       :class="{ 'c-budget-card__bar--over': props.summary.overspent }"
       :value="Math.min(props.summary.spent, props.summary.budget.maximum)"

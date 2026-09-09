@@ -22,8 +22,10 @@ const props = withDefaults(
     /** Hide the label visually below the given breakpoint's layout. */
     hideLabel?: boolean
     error?: string
+    /** Label above the control instead of beside it, as forms expect. */
+    stacked?: boolean
   }>(),
-  { hideLabel: false, error: undefined },
+  { hideLabel: false, error: undefined, stacked: false },
 )
 
 defineEmits<{ 'update:modelValue': [value: string] }>()
@@ -33,7 +35,7 @@ const errorId = `${id}-error`
 </script>
 
 <template>
-  <p class="c-app-select">
+  <p class="c-app-select" :class="{ 'c-app-select--stacked': props.stacked }">
     <label
       class="c-app-select__label"
       :class="{ 'u-visually-hidden': props.hideLabel }"
@@ -62,6 +64,19 @@ const errorId = `${id}-error`
   flex-wrap: wrap;
   gap: var(--space-2);
   align-items: center;
+}
+
+// In a form the label belongs above its control, so every field in the column
+// starts at the same edge. Beside the control is right only in the toolbar,
+// where the label reads as part of a sentence.
+.c-app-select--stacked {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.c-app-select--stacked .c-app-select__label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
 }
 
 .c-app-select__error {

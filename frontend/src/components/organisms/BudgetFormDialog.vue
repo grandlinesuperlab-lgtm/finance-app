@@ -14,7 +14,7 @@
 import { computed, ref, watch } from 'vue'
 
 import type { Budget, Category, Theme } from '@shared/types/finance'
-import { CATEGORIES } from '@shared/types/finance'
+import { CATEGORIES, THEMES } from '@shared/types/finance'
 import AppNumberField from '@/components/atoms/AppNumberField.vue'
 import AppSelect from '@/components/atoms/AppSelect.vue'
 import AppThemeSelect from '@/components/atoms/AppThemeSelect.vue'
@@ -43,6 +43,18 @@ const takenThemes = computed(() =>
   props.existing.filter((entry) => entry.id !== props.budget?.id).map((entry) => entry.theme),
 )
 
+const takenCategories = computed(() =>
+  props.existing.filter((entry) => entry.id !== props.budget?.id).map((entry) => entry.category),
+)
+
+function firstFreeCategory(): Category {
+  return CATEGORIES.find((entry) => !takenCategories.value.includes(entry)) ?? CATEGORIES[0]
+}
+
+function firstFreeTheme(): Theme {
+  return THEMES.find((entry) => !takenThemes.value.includes(entry)) ?? THEMES[0]
+}
+
 // Reset every time the dialog opens, so a cancelled edit does not leak its
 // half-typed values into the next one.
 watch(
@@ -50,9 +62,12 @@ watch(
   (open) => {
     if (!open) return
     errors.value = {}
-    category.value = props.budget?.category ?? 'Entertainment'
+    // A new record starts on the first category and colour that are still
+    // free. Defaulting to a fixed pair would open the form already invalid and
+    // blame the user for a choice they never made.
+    category.value = props.budget?.category ?? firstFreeCategory()
     maximum.value = props.budget ? String(props.budget.maximum) : ''
-    theme.value = props.budget?.theme ?? 'green'
+    theme.value = props.budget?.theme ?? firstFreeTheme()
   },
   { immediate: true },
 )
@@ -90,6 +105,7 @@ function onSubmit() {
         label="Budget Category"
         :options="CATEGORIES"
         :error="errors.category"
+        stacked
       />
 
       <AppNumberField v-model="maximum" label="Maximum Spend" :error="errors.maximum" />

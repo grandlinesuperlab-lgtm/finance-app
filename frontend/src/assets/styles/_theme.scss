@@ -68,6 +68,8 @@
   --color-amount-negative: var(--palette-grey-900);
 
   --color-error: var(--theme-red);
+  // Form controls need a visible edge; the divider grey is too faint for one.
+  --color-border-input: var(--palette-beige-500);
   --color-focus-ring: var(--theme-green);
 
   // The navigation is a permanently dark surface in both themes, so it gets
@@ -132,6 +134,7 @@
   --color-amount-positive: #4aa39e;
   --color-amount-negative: var(--palette-grey-100);
   --color-error: #e2695a;
+  --color-border-input: var(--palette-grey-500);
   --color-focus-ring: #4aa39e;
 
   // Lifted slightly off the page so the rail still reads as its own surface.

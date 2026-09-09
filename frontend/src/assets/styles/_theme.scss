@@ -1,0 +1,143 @@
+@use 'variables' as *;
+
+// =============================================================================
+// Theme — the runtime token layer.
+// -----------------------------------------------------------------------------
+// Emits the :root custom properties and the dark theme. Imported exactly once,
+// by main.scss. See _variables.scss for the compile-time scales.
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Runtime tokens
+// -----------------------------------------------------------------------------
+
+:root {
+  // --- Spacing --------------------------------------------------------------
+  @each $key, $value in $space-scale {
+    --space-#{$key}: #{$value};
+  }
+
+  // --- Typography -----------------------------------------------------------
+  @each $key, $value in $font-size-scale {
+    --font-size-#{$key}: #{$value};
+  }
+
+  --font-family-base:
+    system-ui, -apple-system, 'Segoe UI', roboto, helvetica, arial, sans-serif;
+  // Tabular figures matter for money columns: digits must align vertically.
+  --font-family-numeric: ui-monospace, 'SF Mono', 'Cascadia Mono', menlo, monospace;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.2;
+  --line-height-base: 1.5;
+
+  // --- Palette (raw values — never referenced directly by components) -------
+  --palette-neutral-0: #fff;
+  --palette-neutral-50: #f8f9fb;
+  --palette-neutral-100: #eef1f5;
+  --palette-neutral-200: #dfe3ea;
+  --palette-neutral-300: #c3cad6;
+  --palette-neutral-500: #6b7686;
+  --palette-neutral-700: #3a4250;
+  --palette-neutral-900: #171b22;
+  --palette-neutral-950: #0e1116;
+
+  --palette-accent-100: #dbe9fe;
+  --palette-accent-500: #2f6fed;
+  --palette-accent-600: #2559c4;
+
+  --palette-positive-100: #d8f3e3;
+  --palette-positive-600: #147a4a;
+  --palette-negative-100: #fde0e0;
+  --palette-negative-600: #c02c2c;
+
+  // --- Semantic colors (this is what components use) ------------------------
+  --color-surface: var(--palette-neutral-0);
+  --color-surface-sunken: var(--palette-neutral-50);
+  --color-surface-raised: var(--palette-neutral-0);
+  --color-border: var(--palette-neutral-200);
+  --color-border-strong: var(--palette-neutral-300);
+
+  --color-text: var(--palette-neutral-900);
+  --color-text-muted: var(--palette-neutral-500);
+  --color-text-inverse: var(--palette-neutral-0);
+
+  --color-accent: var(--palette-accent-500);
+  --color-accent-hover: var(--palette-accent-600);
+  --color-accent-subtle: var(--palette-accent-100);
+
+  // Gains and losses. Never encoded by color alone — see the a11y rule in
+  // .claude/skills/component-conventions.
+  --color-positive: var(--palette-positive-600);
+  --color-positive-subtle: var(--palette-positive-100);
+  --color-negative: var(--palette-negative-600);
+  --color-negative-subtle: var(--palette-negative-100);
+
+  --color-focus-ring: var(--palette-accent-500);
+
+  // --- Shape and depth ------------------------------------------------------
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.875rem;
+  --radius-pill: 999rem;
+
+  --shadow-sm: 0 1px 2px rgb(14 17 22 / 6%);
+  --shadow-md: 0 2px 8px rgb(14 17 22 / 8%);
+
+  --border-width: 1px;
+
+  // --- Motion ---------------------------------------------------------------
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --easing-standard: cubic-bezier(0.2, 0, 0.2, 1);
+
+  // --- Layout ---------------------------------------------------------------
+  --layout-max-width: 80rem;
+  --layout-gutter: var(--space-4);
+
+  // --- Layers ---------------------------------------------------------------
+  --z-sticky: 100;
+  --z-overlay: 200;
+}
+
+// -----------------------------------------------------------------------------
+// Dark theme
+// -----------------------------------------------------------------------------
+// Only the semantic layer is redefined — the palette and every other token
+// stays put. That is the payoff of the two-layer approach.
+
+@mixin theme-dark {
+  --color-surface: var(--palette-neutral-900);
+  --color-surface-sunken: var(--palette-neutral-950);
+  --color-surface-raised: var(--palette-neutral-700);
+  --color-border: var(--palette-neutral-700);
+  --color-border-strong: var(--palette-neutral-500);
+
+  --color-text: var(--palette-neutral-50);
+  --color-text-muted: var(--palette-neutral-300);
+  --color-text-inverse: var(--palette-neutral-900);
+
+  --color-accent-subtle: var(--palette-neutral-700);
+  --color-positive: #4ac489;
+  --color-positive-subtle: #16342a;
+  --color-negative: #f08b8b;
+  --color-negative-subtle: #3a1d1d;
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 40%);
+  --shadow-md: 0 2px 8px rgb(0 0 0 / 45%);
+}
+
+// System preference, unless the user explicitly chose light.
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    @include theme-dark;
+  }
+}
+
+// Explicit choice always wins, in both directions.
+:root[data-theme='dark'] {
+  @include theme-dark;
+}

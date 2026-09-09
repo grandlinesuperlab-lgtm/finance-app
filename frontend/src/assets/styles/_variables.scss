@@ -1,0 +1,58 @@
+// =============================================================================
+// Design Tokens — compile-time scales
+// -----------------------------------------------------------------------------
+// Two kinds of tokens live here, and the split is deliberate:
+//
+//   1. SCSS variables  -> values needed at COMPILE time (breakpoints in media
+//                         queries, scale maps used by mixins/loops).
+//   2. CSS properties  -> values that must change at RUNTIME (theming, dark
+//                         mode, density). Never hardcode these in components.
+//
+// Rule for components: use var(--…) for anything visual. Raw hex values,
+// px paddings and font sizes in a component file are a bug, and stylelint
+// enforces that.
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Compile-time scales
+// -----------------------------------------------------------------------------
+
+// Breakpoints are mobile-first minimum widths.
+$breakpoints: (
+  'sm': 30rem,   // 480px
+  'md': 48rem,   // 768px
+  'lg': 64rem,   // 1024px
+  'xl': 80rem,   // 1280px
+);
+
+// Spacing scale, 4px base. Referenced as --space-N below so components never
+// need the SCSS map directly.
+$space-scale: (
+  '0': 0,
+  '1': 0.25rem,
+  '2': 0.5rem,
+  '3': 0.75rem,
+  '4': 1rem,
+  '5': 1.5rem,
+  '6': 2rem,
+  '7': 3rem,
+  '8': 4rem,
+);
+
+// Type scale, 1.200 (minor third) from a 1rem base.
+$font-size-scale: (
+  'xs': 0.75rem,
+  'sm': 0.875rem,
+  'md': 1rem,
+  'lg': 1.125rem,
+  'xl': 1.375rem,
+  '2xl': 1.75rem,
+  '3xl': 2.25rem,
+);
+
+// -----------------------------------------------------------------------------
+// This file emits NO CSS. It is auto-injected into every component's style
+// block by vite.config.ts, so anything that produced output here would be
+// duplicated in every compiled component stylesheet. The runtime tokens
+// (:root custom properties) live in _theme.scss, which main.scss imports once.
+// -----------------------------------------------------------------------------

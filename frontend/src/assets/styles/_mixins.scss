@@ -1,0 +1,58 @@
+@use 'sass:map';
+@use 'variables' as tokens;
+
+// =============================================================================
+// Mixins
+// -----------------------------------------------------------------------------
+// Keep this file small. A mixin earns its place only if it removes a decision
+// that would otherwise be made inconsistently in every component.
+// =============================================================================
+
+/// Mobile-first media query.
+/// @example scss
+///   .c-card { padding: var(--space-4); @include from('md') { padding: var(--space-6); } }
+@mixin from($breakpoint) {
+  @if not map.has-key(tokens.$breakpoints, $breakpoint) {
+    @error 'Unknown breakpoint `#{$breakpoint}`. Known: #{map.keys(tokens.$breakpoints)}.';
+  }
+
+  @media (min-width: map.get(tokens.$breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+/// Visible focus indicator. Used everywhere instead of ad-hoc outline rules so
+/// keyboard users get one consistent, always-visible affordance.
+@mixin focus-ring($offset: 2px) {
+  &:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: $offset;
+  }
+}
+
+/// Hide visually, keep for screen readers. For labels that are obvious to a
+/// sighted user from context but not to a screen reader.
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  clip-path: inset(50%);
+}
+
+/// Truncate a single line of text with an ellipsis.
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/// Digits that line up in columns. Mandatory for any monetary value.
+@mixin numeric {
+  font-family: var(--font-family-numeric);
+  font-variant-numeric: tabular-nums;
+}

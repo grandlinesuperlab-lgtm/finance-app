@@ -1,0 +1,52 @@
+// =============================================================================
+// Global stylesheet — imported once, in main.ts.
+// -----------------------------------------------------------------------------
+// Everything here is global by design: tokens, reset, and a small set of
+// layout utilities. Component styles live in the component's own <style>
+// block and never here.
+// =============================================================================
+
+@use 'theme';
+@use 'reset';
+
+// -----------------------------------------------------------------------------
+// Layout utilities
+// -----------------------------------------------------------------------------
+// Prefixed `l-` so they are visibly not components. These carry no visual
+// styling of their own — only placement.
+
+.l-container {
+  width: 100%;
+  max-width: var(--layout-max-width);
+  padding-inline: var(--layout-gutter);
+  margin-inline: auto;
+}
+
+.l-stack > * + * {
+  margin-block-start: var(--space-4);
+}
+
+// -----------------------------------------------------------------------------
+// Accessibility helpers
+// -----------------------------------------------------------------------------
+
+.u-visually-hidden {
+  @include mx.visually-hidden;
+}
+
+// Keyboard users land here first and can jump straight to the main content.
+.u-skip-link {
+  position: absolute;
+  inset-block-start: var(--space-2);
+  inset-inline-start: var(--space-2);
+  z-index: var(--z-overlay);
+  padding: var(--space-2) var(--space-4);
+  color: var(--color-text-inverse);
+  background-color: var(--color-accent);
+  border-radius: var(--radius-md);
+  transform: translateY(-200%);
+
+  &:focus {
+    transform: translateY(0);
+  }
+}

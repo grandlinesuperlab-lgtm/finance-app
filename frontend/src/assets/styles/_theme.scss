@@ -135,14 +135,11 @@
   --shadow-md: 0 4px 24px rgb(0 0 0 / 45%);
 }
 
-// System preference, unless the user explicitly chose light.
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    @include theme-dark;
-  }
-}
-
-// An explicit choice always wins, in both directions.
+// Light is the default at every system setting. The design is a beige app with
+// a dark rail, and following `prefers-color-scheme` would hand roughly half of
+// all visitors a version of it that was never designed. Dark stays available as
+// an explicit choice — the token layering is what makes that cheap to offer —
+// but it is opt-in, not automatic.
 :root[data-theme='dark'] {
   @include theme-dark;
 }

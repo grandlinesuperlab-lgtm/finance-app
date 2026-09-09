@@ -6,11 +6,20 @@
  * which computes nothing itself — the arithmetic lives in domain/.
  */
 
+import { computed } from 'vue'
+
 import BaseButton from '@/components/atoms/BaseButton.vue'
 import BalanceSummary from '@/components/organisms/BalanceSummary.vue'
+import PotsSummary from '@/components/organisms/PotsSummary.vue'
+import RecentTransactions from '@/components/organisms/RecentTransactions.vue'
+import { latestTransactions } from '@/domain/transactions'
 import { useFinanceStore } from '@/stores/finance'
 
+const RECENT_COUNT = 5
+
 const finance = useFinanceStore()
+
+const recent = computed(() => latestTransactions(finance.transactions, RECENT_COUNT))
 </script>
 
 <template>
@@ -23,6 +32,19 @@ const finance = useFinanceStore()
 
   <div v-else class="l-overview" :aria-busy="finance.isLoading || undefined">
     <BalanceSummary class="l-overview__balance" :balance="finance.balance" />
+
+    <!--
+      Two column wrappers rather than grid areas: the cards in each column have
+      very different heights, and areas would force the two columns onto shared
+      rows and open a gap under the shorter card. Purely presentational, and on
+      one column they collapse away without changing the reading order.
+    -->
+    <div class="l-overview__column">
+      <PotsSummary :pots="finance.pots" :total-saved="finance.totalSaved" />
+      <RecentTransactions :transactions="recent" />
+    </div>
+
+    <div class="l-overview__column"></div>
   </div>
 </template>
 
@@ -57,5 +79,11 @@ const finance = useFinanceStore()
   @include mx.from('lg') {
     grid-column: 1 / -1;
   }
+}
+
+.l-overview__column {
+  display: grid;
+  gap: var(--space-6);
+  align-content: start;
 }
 </style>

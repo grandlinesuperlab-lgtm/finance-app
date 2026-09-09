@@ -1,0 +1,65 @@
+{
+  "extends": ["stylelint-config-standard-scss", "stylelint-config-recess-order"],
+  "rules": {
+    "selector-class-pattern": [
+      "^(?:[clu]-)?[a-z][a-z0-9]*(?:-[a-z0-9]+)*(?:__[a-z][a-z0-9]*(?:-[a-z0-9]+)*)?(?:--[a-z][a-z0-9]*(?:-[a-z0-9]+)*)?$",
+      {
+        "message": "Class names must follow BEM: [prefix-]block[__element][--modifier], all lowercase kebab-case. Prefixes: c- component, l- layout, u- utility."
+      }
+    ],
+
+    "max-nesting-depth": [
+      1,
+      {
+        "ignore": ["blockless-at-rules", "pseudo-classes"],
+        "message": "Nest at most one level. Deep nesting hides specificity and makes class names unsearchable."
+      }
+    ],
+
+    "selector-max-id": 0,
+    "selector-max-universal": 1,
+    "declaration-no-important": true,
+
+    "scss/at-extend-no-missing-placeholder": true,
+    "scss/selector-no-union-class-name": true,
+
+    "color-no-hex": [
+      true,
+      {
+        "message": "No raw colors in components. Use a semantic token: var(--color-…). Palette values belong in _tokens.scss."
+      }
+    ],
+
+    "declaration-property-value-disallowed-list": {
+      "/^(margin|padding|gap|inset)/": [
+        "/^\\d+px$/",
+        "/^\\d+(\\.\\d+)?rem$/"
+      ],
+      "font-size": ["/^\\d/"]
+    },
+
+    "unit-allowed-list": ["rem", "em", "%", "vh", "vw", "dvh", "fr", "s", "ms", "deg", "px"],
+
+    "no-descending-specificity": null
+  },
+  "overrides": [
+    {
+      "files": ["src/assets/styles/**/*.scss"],
+      "rules": {
+        "color-no-hex": null,
+        "declaration-property-value-disallowed-list": null,
+        "max-nesting-depth": null,
+        "declaration-no-important": null,
+        "property-no-vendor-prefix": null,
+        "selector-max-universal": null,
+        "custom-property-empty-line-before": null,
+        "scss/comment-no-empty": null,
+        "scss/double-slash-comment-empty-line-before": null
+      }
+    },
+    {
+      "files": ["**/*.vue"],
+      "customSyntax": "postcss-html"
+    }
+  ]
+}

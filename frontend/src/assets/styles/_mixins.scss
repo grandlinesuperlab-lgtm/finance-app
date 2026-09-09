@@ -51,8 +51,8 @@
   white-space: nowrap;
 }
 
-/// Digits that line up in columns. Mandatory for any monetary value.
+/// Digits that line up in columns. Mandatory for any monetary value, so that
+/// amounts in a table form a straight right edge.
 @mixin numeric {
-  font-family: var(--font-family-numeric);
   font-variant-numeric: tabular-nums;
 }

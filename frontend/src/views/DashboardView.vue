@@ -11,6 +11,6 @@
 <style scoped lang="scss">
 h1 {
   margin-block-end: var(--space-4);
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-xl);
 }
 </style>

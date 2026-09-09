@@ -3,10 +3,14 @@
  * The reference atom. Every other atom follows this shape.
  *
  * Renders a real <button>, never a styled <div>: that is what gives keyboard
- * activation, focus handling and the correct role for free.
+ * activation, the correct role and focus handling for free.
+ *
+ * The three variants mirror the design: a solid dark primary, a soft secondary
+ * on the beige surface, and a quiet tertiary used for the "See Details" style
+ * links that sit in card headers.
  */
 
-type Variant = 'primary' | 'secondary' | 'ghost'
+type Variant = 'primary' | 'secondary' | 'tertiary'
 
 const props = withDefaults(
   defineProps<{
@@ -16,12 +20,15 @@ const props = withDefaults(
     disabled?: boolean
     /** Explicit, because the HTML default ("submit") surprises people. */
     type?: 'button' | 'submit'
+    /** Stretches the button to the width of its container. */
+    block?: boolean
   }>(),
   {
     variant: 'primary',
     loading: false,
     disabled: false,
     type: 'button',
+    block: false,
   },
 )
 
@@ -31,13 +38,13 @@ defineEmits<{ click: [event: MouseEvent] }>()
 <template>
   <button
     class="c-base-button"
-    :class="`c-base-button--${props.variant}`"
+    :class="[`c-base-button--${props.variant}`, { 'c-base-button--block': props.block }]"
     :type="props.type"
     :disabled="props.disabled || props.loading"
     :aria-busy="props.loading"
     @click="$emit('click', $event)"
   >
-    <!-- Decorative: the accessible state is carried by aria-busy above. -->
+    <!-- Decorative: the state is announced by aria-busy above. -->
     <svg
       v-if="props.loading"
       class="c-base-button__spinner"
@@ -61,44 +68,54 @@ defineEmits<{ click: [event: MouseEvent] }>()
   min-height: 2.75rem; // 44px touch target
   padding-inline: var(--space-4);
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-bold);
   border: var(--border-width) solid transparent;
-  border-radius: var(--radius-md);
-  transition: background-color var(--duration-fast) var(--easing-standard);
+  border-radius: var(--radius-sm);
+  transition:
+    background-color var(--duration-fast) var(--easing-standard),
+    color var(--duration-fast) var(--easing-standard);
 
   @include mx.focus-ring;
 
   &:disabled {
     cursor: not-allowed;
-    opacity: 0.6;
+    opacity: 0.5;
   }
+}
+
+.c-base-button--block {
+  width: 100%;
 }
 
 .c-base-button--primary {
   color: var(--color-text-inverse);
-  background-color: var(--color-accent);
+  background-color: var(--color-surface-inverse);
 
   &:hover:not(:disabled) {
-    background-color: var(--color-accent-hover);
+    background-color: var(--color-text-muted);
   }
 }
 
 .c-base-button--secondary {
   color: var(--color-text);
-  background-color: var(--color-surface);
-  border-color: var(--color-border-strong);
+  background-color: var(--color-surface-sunken);
 
   &:hover:not(:disabled) {
-    background-color: var(--color-surface-sunken);
+    color: var(--color-text-muted);
+    background-color: var(--color-surface);
+    border-color: var(--color-border);
   }
 }
 
-.c-base-button--ghost {
-  color: var(--color-accent);
+.c-base-button--tertiary {
+  min-height: auto;
+  padding-inline: 0;
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-muted);
   background-color: transparent;
 
   &:hover:not(:disabled) {
-    background-color: var(--color-accent-subtle);
+    color: var(--color-text);
   }
 }
 

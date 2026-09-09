@@ -1,58 +1,77 @@
 // =============================================================================
-// Design Tokens — compile-time scales
+// Design tokens — compile-time scales
 // -----------------------------------------------------------------------------
-// Two kinds of tokens live here, and the split is deliberate:
+// Values needed while Sass compiles: breakpoints for media queries and the maps
+// the runtime tokens are generated from.
 //
-//   1. SCSS variables  -> values needed at COMPILE time (breakpoints in media
-//                         queries, scale maps used by mixins/loops).
-//   2. CSS properties  -> values that must change at RUNTIME (theming, dark
-//                         mode, density). Never hardcode these in components.
-//
-// Rule for components: use var(--…) for anything visual. Raw hex values,
-// px paddings and font sizes in a component file are a bug, and stylelint
-// enforces that.
+// This file emits NO CSS. It is injected into every component's style block by
+// vite.config.ts, so anything producing output here would be duplicated in
+// every compiled component stylesheet. The runtime tokens live in _theme.scss,
+// which main.scss imports exactly once.
 // =============================================================================
 
-// -----------------------------------------------------------------------------
-// Compile-time scales
-// -----------------------------------------------------------------------------
-
-// Breakpoints are mobile-first minimum widths.
+// Mobile-first minimum widths, matching the three layouts in the design.
 $breakpoints: (
   'sm': 30rem,   // 480px
-  'md': 48rem,   // 768px
-  'lg': 64rem,   // 1024px
+  'md': 48rem,   // 768px  — tablet: icon rail
+  'lg': 64rem,   // 1024px — desktop: full sidebar
   'xl': 80rem,   // 1280px
 );
 
-// Spacing scale, 4px base. Referenced as --space-N below so components never
-// need the SCSS map directly.
+// 4px base.
 $space-scale: (
   '0': 0,
   '1': 0.25rem,
   '2': 0.5rem,
   '3': 0.75rem,
   '4': 1rem,
-  '5': 1.5rem,
-  '6': 2rem,
-  '7': 3rem,
-  '8': 4rem,
+  '5': 1.25rem,
+  '6': 1.5rem,
+  '8': 2rem,
+  '10': 2.5rem,
+  '12': 3rem,
 );
 
-// Type scale, 1.200 (minor third) from a 1rem base.
+// The five presets from the style guide.
 $font-size-scale: (
-  'xs': 0.75rem,
-  'sm': 0.875rem,
-  'md': 1rem,
-  'lg': 1.125rem,
-  'xl': 1.375rem,
-  '2xl': 1.75rem,
-  '3xl': 2.25rem,
+  'xs': 0.75rem,    // 12px — labels, captions
+  'sm': 0.875rem,   // 14px — body, table cells
+  'md': 1rem,       // 16px — emphasis
+  'lg': 1.25rem,    // 20px — section headings
+  'xl': 2rem,       // 32px — figures and page title
 );
 
-// -----------------------------------------------------------------------------
-// This file emits NO CSS. It is auto-injected into every component's style
-// block by vite.config.ts, so anything that produced output here would be
-// duplicated in every compiled component stylesheet. The runtime tokens
-// (:root custom properties) live in _theme.scss, which main.scss imports once.
-// -----------------------------------------------------------------------------
+// The design system's raw palette, straight from the style guide.
+// Components never reference these — they use the semantic tokens in
+// _theme.scss. Kept here so both the semantic layer and the theme map below
+// can be generated from one source.
+$palette: (
+  'white': #fff,
+  'beige-100': #f8f4f0,
+  'beige-500': #98908b,
+  'grey-100': #f2f2f2,
+  'grey-300': #b3b3b3,
+  'grey-500': #696868,
+  'grey-900': #201f24,
+);
+
+// The fifteen category colours a budget or pot can carry. The keys match the
+// `Theme` union in shared/types/finance.ts, so stored data never holds a hex
+// value and a re-theme touches only this map.
+$themes: (
+  'green': #277c78,
+  'yellow': #f2cdac,
+  'cyan': #82c9d7,
+  'navy': #626070,
+  'red': #c94736,
+  'purple': #826cb0,
+  'light-purple': #af81ba,
+  'turquoise': #597c7c,
+  'brown': #93674f,
+  'magenta': #934f6f,
+  'blue': #3f82b2,
+  'grey': #97a0ac,
+  'army': #7f9161,
+  'gold': #cab361,
+  'orange': #be6c49,
+);

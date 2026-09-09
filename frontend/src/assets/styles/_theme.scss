@@ -136,7 +136,11 @@
 
   // Lifted slightly off the page so the rail still reads as its own surface.
   --color-nav-surface: #26252b;
-  --color-inverted-surface: #26252b;
+
+  // The balance card must stay louder than an ordinary card. Giving it the
+  // same surface as the others in dark mode quietly erased the hierarchy the
+  // design builds on, so it is lifted one more step instead.
+  --color-inverted-surface: #35343c;
 
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 40%);
   --shadow-md: 0 4px 24px rgb(0 0 0 / 45%);

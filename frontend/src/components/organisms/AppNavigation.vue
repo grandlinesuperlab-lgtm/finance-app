@@ -8,6 +8,9 @@
  * sources of truth for the nav items and a hidden duplicate in the tab order.
  */
 
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+
 import AppIcon from '@/components/atoms/AppIcon.vue'
 import type { IconName } from '@/components/atoms/icon-paths'
 import { useSidebarCollapsed } from '@/composables/useSidebarCollapsed'
@@ -27,6 +30,24 @@ const items: NavItem[] = [
 ]
 
 const { collapsed, toggle } = useSidebarCollapsed()
+
+const route = useRoute()
+
+/**
+ * Which item the marker sits on.
+ *
+ * The marker is one element for the whole list rather than a background on the
+ * active link, so that a route change moves it instead of blinking it from one
+ * place to another. Its position is a number the stylesheet does the geometry
+ * with — the component says "the third one", not "168 pixels down".
+ *
+ * Query strings are deliberately ignored: filtering the transactions list is
+ * not a change of page, and the marker should not react to it.
+ */
+const activeIndex = computed(() => {
+  const index = items.findIndex((item) => item.to === route.path)
+  return index === -1 ? 0 : index
+})
 </script>
 
 <template>
@@ -40,7 +61,11 @@ const { collapsed, toggle } = useSidebarCollapsed()
       <span v-if="collapsed" aria-hidden="true">f</span>
     </p>
 
-    <ul class="c-app-navigation__list" role="list">
+    <ul
+      class="c-app-navigation__list"
+      role="list"
+      :style="{ '--nav-index': activeIndex, '--nav-count': items.length }"
+    >
       <li v-for="item in items" :key="item.to">
         <RouterLink class="c-app-navigation__link" :to="item.to">
           <AppIcon :name="item.icon" />
@@ -113,12 +138,6 @@ const { collapsed, toggle } = useSidebarCollapsed()
   }
 }
 
-.c-app-navigation--collapsed .c-app-navigation__link[aria-current='page'] {
-  @include mx.from('lg') {
-    padding-inline-start: calc(var(--space-4) - 4px);
-  }
-}
-
 .c-app-navigation__brand {
   display: none;
 
@@ -133,14 +152,47 @@ const { collapsed, toggle } = useSidebarCollapsed()
 }
 
 .c-app-navigation__list {
+  position: relative;
   display: flex;
   flex: 1;
 
   @include mx.from('lg') {
     flex: 0;
     flex-direction: column;
-    gap: var(--space-1);
     padding-inline-end: var(--space-6);
+  }
+}
+
+// The marker that sits behind the current item.
+// A pseudo-element, because it is decoration: it adds nothing to the document
+// and nothing to the accessibility tree, and the aria-current attribute the
+// router sets remains the only thing that says which page is open. The
+// geometry is index-based — one cell of the list, moved by whole cells — so it
+// never needs a measured pixel value and stays correct at any zoom level.
+// The items carry no gap; the marker fills its cell edge to edge, and a gap
+// would make "one cell" no longer equal to "100% of my own width".
+.c-app-navigation__list::before {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: 0;
+  width: calc(100% / var(--nav-count));
+  height: 100%;
+  content: '';
+  background-color: var(--color-surface-sunken);
+  border-block-end: 4px solid var(--color-accent);
+  border-start-start-radius: var(--radius-sm);
+  border-start-end-radius: var(--radius-sm);
+  transform: translateX(calc(var(--nav-index) * 100%));
+  transition: transform var(--duration-slow) var(--easing-travel);
+
+  @include mx.from('lg') {
+    width: 100%;
+    height: calc(100% / var(--nav-count));
+    border-block-end: 0;
+    border-inline-start: 4px solid var(--color-accent);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    transform: translateY(calc(var(--nav-index) * 100%));
   }
 }
 
@@ -153,6 +205,8 @@ const { collapsed, toggle } = useSidebarCollapsed()
 }
 
 .c-app-navigation__link {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
@@ -164,8 +218,7 @@ const { collapsed, toggle } = useSidebarCollapsed()
   font-weight: var(--font-weight-bold);
   color: var(--color-nav-text-muted);
   text-decoration: none;
-  border-start-start-radius: var(--radius-sm);
-  border-start-end-radius: var(--radius-sm);
+  transition: color var(--duration-base) var(--easing-standard);
 
   @include mx.focus-ring(-2px);
 
@@ -175,10 +228,11 @@ const { collapsed, toggle } = useSidebarCollapsed()
 
   // The router marks the active route with aria-current, so the styling hangs
   // off the same attribute assistive technology uses — they cannot drift apart.
+  // The surface behind it belongs to the marker above, not to the link: only
+  // the text colour changes here, and it changes at the speed the marker
+  // travels so that the two read as one movement.
   &[aria-current='page'] {
     color: var(--color-text);
-    background-color: var(--color-surface-sunken);
-    border-block-end: 4px solid var(--color-accent);
   }
 
   @include mx.from('lg') {
@@ -188,13 +242,6 @@ const { collapsed, toggle } = useSidebarCollapsed()
     min-height: 3.5rem;
     padding-inline: var(--space-8);
     font-size: var(--font-size-md);
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
-
-    &[aria-current='page'] {
-      padding-inline-start: calc(var(--space-8) - 4px);
-      border-block-end: 0;
-      border-inline-start: 4px solid var(--color-accent);
-    }
   }
 }
 

@@ -4,9 +4,11 @@
  * summarises.
  *
  * The visible link text is the same on all four cards. Someone listing the
- * links on a page would get "See Details" four times with no way to tell them
+ * links on a page would get "Details" four times with no way to tell them
  * apart, so each carries an aria-label naming its destination while the
- * visible text stays as designed.
+ * visible text stays as designed. The destination comes first in that name,
+ * because a list of links is read as a list and the distinguishing word should
+ * not sit at the end of every entry.
  */
 
 import AppIcon from '@/components/atoms/AppIcon.vue'
@@ -15,7 +17,7 @@ const props = withDefaults(
   defineProps<{
     title: string
     to: string
-    /** Completes "See details for …" as the link's accessible name. */
+    /** Names the target page: "Sparziele: Details anzeigen". */
     destination: string
     linkText?: string
   }>(),
@@ -29,7 +31,7 @@ const props = withDefaults(
     <RouterLink
       class="c-section-header__link"
       :to="props.to"
-      :aria-label="`${props.linkText} for ${props.destination}`"
+      :aria-label="`${props.destination}: ${props.linkText} anzeigen`"
     >
       {{ props.linkText }}
       <AppIcon name="chevronRight" />

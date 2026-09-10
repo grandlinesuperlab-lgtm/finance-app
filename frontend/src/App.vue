@@ -28,9 +28,19 @@ onMounted(() => {
     <AppNavigation class="l-app__nav" />
 
     <main id="main" class="l-app__main" tabindex="-1">
-      <div class="l-app__content">
-        <RouterView />
-      </div>
+      <!--
+        The wrapper that already carried the page width is what gets keyed and
+        animated, so the transition costs no extra element. The key is the path
+        and not the full URL: filtering the transactions list changes the query
+        string, and that is a change within a page, not a change of page.
+      -->
+      <RouterView v-slot="{ Component, route }">
+        <Transition name="u-page" mode="out-in">
+          <div :key="route.path" class="l-app__content">
+            <component :is="Component" />
+          </div>
+        </Transition>
+      </RouterView>
     </main>
   </div>
 </template>
@@ -70,5 +80,31 @@ onMounted(() => {
   @include mx.from('md') {
     padding-inline: var(--space-10);
   }
+}
+
+// The page change: out quickly, in a little more slowly and with a short rise.
+// `mode="out-in"` means the two pages never overlap. That is the point — two
+// screens fading through each other is where a transition starts to feel like
+// a delay, and it would also put two <h1> elements in the document at once.
+// The movement is 0.5rem, far too small to be read as an animation and just
+// enough to say "this is new content", and the reduced-motion rule in the
+// reset switches all of it off for anyone who asked for that.
+.u-page-enter-active {
+  transition:
+    opacity var(--duration-base) var(--easing-standard),
+    transform var(--duration-base) var(--easing-travel);
+}
+
+.u-page-leave-active {
+  transition: opacity var(--duration-fast) var(--easing-standard);
+}
+
+.u-page-enter-from {
+  opacity: 0;
+  transform: translateY(0.5rem);
+}
+
+.u-page-leave-to {
+  opacity: 0;
 }
 </style>

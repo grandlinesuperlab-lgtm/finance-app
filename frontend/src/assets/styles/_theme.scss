@@ -99,7 +99,16 @@
   // --- Motion ---------------------------------------------------------------
   --duration-fast: 120ms;
   --duration-base: 200ms;
+
+  // Long enough for the eye to follow something across a distance — the
+  // navigation marker travels the height of the rail — without making the
+  // interface feel slow. Anything above ~300ms starts to be waited for.
+  --duration-slow: 280ms;
   --easing-standard: cubic-bezier(0.2, 0, 0.2, 1);
+
+  // Leaves quickly, arrives gently: the right curve for something that moves
+  // from one place to another rather than merely fading.
+  --easing-travel: cubic-bezier(0.2, 0.8, 0.2, 1);
 
   // --- Layout ---------------------------------------------------------------
   --layout-max-width: 87.5rem;
